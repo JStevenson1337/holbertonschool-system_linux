@@ -4,6 +4,11 @@
 #include <dirent.h>
 
 
+/**
+ * @main  Main function
+ * @argc Number	 function
+ * @argv Array of strings
+ */
 int main(int argc, char *argv[])
 {
 	DIR *dir;
