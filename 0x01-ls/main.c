@@ -6,28 +6,40 @@
 
 /**
  * @main  Main function
- * @argc Number	 function
- * @argv Array of strings
+ * @argc Number of functions
+ * @argv Array of functions
  */
-int main(int argc, char *argv[])
+int main(int argc, char **argv)
 {
-	DIR *dir;
-	struct dirent *ent;
-	char *path = ".";
-
-	if (argc > 1)
-		path = argv[1];
-	dir = opendir(path);
-	if (dir == NULL)
-		return (1);
-	while ((ent = readdir(dir)) != NULL)
+	// Check if the user has entered a directory
+	if (argc < 2)
 	{
-		if (ent->d_name[0] == '.')
-			continue;
+		printf("Usage: %s <directory>\n", argv[0]);
+		return 1;
+	}
+
+	// Get the directory
+	DIR *dir = opendir(argv[1]);
+	if (dir == NULL)
+	{
+		printf("Error: %s is not a directory\n", argv[1]);
+		return 1;
+	}
+
+	// Get the directory entries
+	struct dirent *entry;
+	while ((entry = readdir(dir)) != NULL)
+	{
+		// Check if the entry is a directory
+		if (entry->d_type == DT_DIR)
 		{
-			printf(" %s ", ent->d_name);
+			// Print the directory name
+			printf("%s\n", entry->d_name);
 		}
 	}
+
+	// Close the directory
 	closedir(dir);
-	return (0);
+
+	return 0;
 }
