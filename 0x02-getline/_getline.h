@@ -8,22 +8,15 @@
 
 #define READ_SIZE 1024
 
-/**
-	* struct reader_s - struct that holds a file descriptor and a buffer
-	* @fd: file descriptor
-	* @buf: buffer
-	* @bytes: number of bytes in buffer
-	* @next: pointer to next reader struct
-	**/
-typedef struct reader_s
-{
-	int fd;
-	char *buf;
-	int bytes;
-	struct reader_s *next;
-} reader_t;
 
 char *_getline(const int fd);
 
+typedef struct readline_s
+{
+	char *line;
+	size_t len;
+	size_t size;
+	struct readline_s *next;
+} readline_t;
 
 #endif /* GETLINE_H */

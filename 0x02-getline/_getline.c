@@ -3,57 +3,79 @@
 /**
  * _getline - reads a line from a file descriptor
  * @fd: file descriptor
- * Return: pointer to line read
+ *
+ * Return: pointer to line read, or NULL on failure
  */
 char *_getline(const int fd)
 {
-	static reader_t *readers;
-	reader_t *rd;
-	char *bytes;
-	int bytes_read;
+	static readline_t *head = NULL;
+	readline_t *curr = head;
+	char *line = NULL;
+	ssize_t read_bytes;
+
+
 
 	if (fd < 0)
 		return (NULL);
 
-	/* Find the reader for this file descriptor */
-	rd = readers;
-	while (rd != NULL && rd->fd != fd)
-		rd = rd->next;
-
-	/* If the reader doesn't exist, create it */
-	if (rd == NULL)
+	while (1)
 	{
-		rd = malloc(sizeof(reader_t));
-		if (rd == NULL)
-			return (NULL);
-		rd->fd = fd;
-		rd->buf = malloc(READ_SIZE);
-		if (rd->buf == NULL)
+		if (curr == NULL)
 		{
-			free(rd);
-			return (NULL);
+			curr = malloc(sizeof(readline_t));
+			if (curr == NULL)
+				return (NULL);
+			curr->line = NULL;
+			curr->len = 0;
+			curr->size = 0;
+			curr->next = NULL;
+			if (head == NULL)
+				head = curr;
+			else
+			{
+				readline_t *tmp = head;
+				while (tmp->next != NULL)
+					tmp = tmp->next;
+				tmp->next = curr;
+			}
 		}
-		rd->bytes = 0;
-		rd->next = readers;
-		readers = rd;
+		if (curr->line == NULL)
+		{
+			curr->line = malloc(sizeof(char) * READ_SIZE);
+			if (curr->line == NULL)
+				return (NULL);
+			curr->size = READ_SIZE;
+		}
+		if (curr->len == curr->size)
+		{
+			curr->line = realloc(curr->line, curr->size * 2);
+			if (curr->line == NULL)
+				return (NULL);
+			curr->size *= 2;
+		}
+		read_bytes = read(fd, curr->line + curr->len, 1);
+		if (read_bytes == -1)
+			return (NULL);
+		if (read_bytes == 0)
+		{
+			if (curr->len == 0)
+				return (NULL);
+			line = curr->line;
+			curr->line = NULL;
+			curr->len = 0;
+			curr->size = 0;
+			return (line);
+		}
+		if (curr->line[curr->len] == '\n')
+		{
+			line = curr->line;
+			curr->line = NULL;
+			curr->len = 0;
+			curr->size = 0;
+			return (line);
+		}
+		curr->len++;
 	}
-
-	/* Read bytes from the file descriptor */
-	bytes_read = read(fd, rd->buf + rd->bytes, READ_SIZE - rd->bytes);
-	if (bytes_read < 0)
-		return (NULL);
-	rd->bytes += bytes_read;
-
-	/* Find the newline */
-	bytes = memchr(rd->buf, '\n', rd->bytes);
-	if (bytes == NULL)
-		return (NULL);
-
-	/* Copy the line to a new buffer and return it */
-	bytes = strndup(rd->buf, bytes - rd->buf);
-	if (bytes == NULL)
-		return (NULL);
-	rd->bytes -= bytes - rd->buf;
-	memmove(rd->buf, bytes, rd->bytes);
-	return (bytes);
 }
+
+
