@@ -13,8 +13,6 @@ char *_getline(const int fd)
 	char *line = NULL;
 	ssize_t read_bytes;
 
-
-
 	if (fd < 0)
 		return (NULL);
 

@@ -1,45 +1,80 @@
 #include "hls.h"
-#include <stdio.h>
-#include <string.h>
-#include <dirent.h>
-
 
 /**
- * @main  Main function
- * @argc Number of functions
- * @argv Array of functions
+ * @brief      Error handler
+ * @argc: number of arguments
+ * @argv: array of arguments
+ * @return	 0 if no error, 1 if error
  */
-int main(int argc, char **argv)
+unsigned int hls(int argc, char *argv[])
 {
-	// Check if the user has entered a directory
-	if (argc < 2)
-	{
-		printf("Usage: %s <directory>\n", argv[0]);
-		return 1;
-	}
+	DIR *dir;
+	struct dirent *dent;
+	char *directory = ".";
+	int i, space, new_line;
+	unsigned int exit_status = 0;
 
-	// Get the directory
-	DIR *dir = opendir(argv[1]);
-	if (dir == NULL)
+	for (i = 1, space = 0; i < argc || argc == 1; i++, space = 0)
 	{
-		printf("Error: %s is not a directory\n", argv[1]);
-		return 1;
-	}
-
-	// Get the directory entries
-	struct dirent *entry;
-	while ((entry = readdir(dir)) != NULL)
-	{
-		// Check if the entry is a directory
-		if (entry->d_type == DT_DIR)
+		if (argc > 1)
+			directory = argv[i];
+		dir = opendir(directory);
+		if (dir == NULL)
 		{
-			// Print the directory name
-			printf("%s\n", entry->d_name);
+			exit_status = error_handler(directory);
+			continue;
 		}
+		if (argc > 2)
+			printf("%s:\n", argv[i]);
+		while ((dent = readdir(dir)) != NULL)
+		{
+			if (*dent->d_name == '.')
+				continue;
+			if (space == 1)
+				printf(" %s", dent->d_name);
+			else
+				printf("%s", dent->d_name);
+			space = 1;
+			new_line = 1;
+		}
+		if (new_line == 1)
+			printf("\n");
+		if (argv[i + 1] != NULL && opendir(argv[i + 1]) != NULL)
+			printf("\n");
+		closedir(dir);
+		if (argc == 1)
+			break;
 	}
+	return (exit_status);
+}
 
-	// Close the directory
-	closedir(dir);
+/**
+ * error_handler - handles errors for hls
+ * @directory: directory to search in
+ * Return: 2 for failure
+ */
+unsigned int error_handler(char *dir)
+{
+	char buf[BUFSIZ];
 
-	return 0;
+	if (errno == ENOENT)
+		sprintf(buf, "hls: cannot access %s", dir);
+	else if (errno == EACCES)
+		sprintf(buf, "hls: cannot open directory %s", dir);
+	perror(buf);
+	return (2);
+}
+
+/**
+ * main - entry point for program
+ * @argc: number of arguments
+ * @argv: arguments given
+ * Return: 0 on success, 2 on failure
+ */
+int main(int argc, char *argv[])
+{
+	int exit_status;
+
+	exit_status = hls(argc, argv);
+	return (exit_status);
 }
