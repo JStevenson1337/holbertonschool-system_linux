@@ -13,9 +13,28 @@
 #include <time.h>
 #include <unistd.h>
 
-unsigned int error_handler(char *dir);
-unsigned int hls(int argc, char *argv[]);
-void *_realloc(void *ptr, unsigned int old_size, unsigned int new_size);
+
+
+
+typedef struct error_handler_s
+{
+	char *directory;
+	int error;
+} error_handler_t;
+
+typedef struct stat_s
+{
+	char *name;
+	char *permissions;
+	char *links;
+	char *owner;
+	char *group;
+	char *size;
+	char *date;
+	char *time;
+	char *type;
+} stat_t;
+
 
 
 #endif /*_HLS_H*/

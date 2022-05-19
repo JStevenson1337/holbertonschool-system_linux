@@ -1,80 +1,61 @@
 #include "hls.h"
 
-/**
- * @brief      Error handler
- * @argc: number of arguments
- * @argv: array of arguments
- * @return	 0 if no error, 1 if error
- */
-unsigned int hls(int argc, char *argv[])
+void hls(const char *dir,int op_a,int op_1)
 {
-	DIR *dir;
-	struct dirent *dent;
-	char *directory = ".";
-	int i, space, new_line;
-	unsigned int exit_status = 0;
-
-	for (i = 1, space = 0; i < argc || argc == 1; i++, space = 0)
+	//Here we will list the directory
+	struct dirent *d;
+	DIR *dh = opendir(dir);
+	if (!dh)
 	{
-		if (argc > 1)
-			directory = argv[i];
-		dir = opendir(directory);
-		if (dir == NULL)
+		if (errno == ENOENT)
 		{
-			exit_status = error_handler(directory);
-			continue;
+			//If the directory is not found
+			perror("Directory doesn't exist");
 		}
-		if (argc > 2)
-			printf("%s:\n", argv[i]);
-		while ((dent = readdir(dir)) != NULL)
+		else
 		{
-			if (*dent->d_name == '.')
-				continue;
-			if (space == 1)
-				printf(" %s", dent->d_name);
-			else
-				printf("%s", dent->d_name);
-			space = 1;
-			new_line = 1;
+			//If the directory is not readable then throw error and exit
+			perror("Unable to read directory");
 		}
-		if (new_line == 1)
-			printf("\n");
-		if (argv[i + 1] != NULL && opendir(argv[i + 1]) != NULL)
-			printf("\n");
-		closedir(dir);
-		if (argc == 1)
-			break;
+		exit(EXIT_FAILURE);
 	}
-	return (exit_status);
+	//While the next entry is not readable we will print directory files
+	while ((d = readdir(dh)) != NULL)
+	{
+		//If hidden files are found we continue
+		if (!op_a && d->d_name[0] == '.')
+			continue;
+		printf("%s  ", d->d_name);
+		if(op_1) printf("\n");
+	}
+	if(!op_1)
+	printf("\n");
 }
-
-/**
- * error_handler - handles errors for hls
- * @directory: directory to search in
- * Return: 2 for failure
- */
-unsigned int error_handler(char *dir)
+int main(int argc, const char *argv[])
 {
-	char buf[BUFSIZ];
-
-	if (errno == ENOENT)
-		sprintf(buf, "hls: cannot access %s", dir);
-	else if (errno == EACCES)
-		sprintf(buf, "hls: cannot open directory %s", dir);
-	perror(buf);
-	return (2);
-}
-
-/**
- * main - entry point for program
- * @argc: number of arguments
- * @argv: arguments given
- * Return: 0 on success, 2 on failure
- */
-int main(int argc, char *argv[])
-{
-	int exit_status;
-
-	exit_status = hls(argc, argv);
-	return (exit_status);
+	if (argc == 1)
+	{
+		hls(".",0,0);
+	}
+	else if (argc == 2)
+	{
+		if (argv[1][0] == '-')
+		{
+			//Checking if option is passed
+			//Options supporting: a, l
+			int op_a = 0, op_1 = 0;
+			char *p = (char*)(argv[1] + 1);
+			while(*p){
+				if(*p == 'a') op_a = 1;
+				else if(*p == '1') op_1 = 1;
+				else{
+					perror("Option not available");
+					exit(EXIT_FAILURE);
+				}
+				p++;
+			}
+			hls(".",op_a,op_1);
+		}
+	}
+	return 0;
 }
