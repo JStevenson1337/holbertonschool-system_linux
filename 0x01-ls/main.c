@@ -23,8 +23,8 @@ void listFiles(const char *dirname)
 	}
 	while ((entry = readdir(dir)) != NULL)
 	{
-		if (strcmp(entry->d_name, current_directory) == 0 ||
-			strcmp(entry->d_name, parent_directory) == 0)
+		if (_strcmp(entry->d_name, current_directory) == 0 ||
+			_strcmp(entry->d_name, parent_directory) == 0)
 			continue;
 		sprintf(path, "%s/%s", dirname, entry->d_name);
 		if (lstat(path, &statbuf) == -1)
@@ -37,6 +37,7 @@ void listFiles(const char *dirname)
 			printf("%s  ", entry->d_name);
 		}
 	}
+	printf("\n");
 	closedir(dir);
 }
 

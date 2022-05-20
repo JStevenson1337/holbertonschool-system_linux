@@ -16,6 +16,6 @@
 
 void listFiles(const char *dirname);
 void error_handler(int error, const char *path, const char *filename);
-
+int _strcmp(char *s1, char *s2);
 
 #endif /*_HLS_H*/
