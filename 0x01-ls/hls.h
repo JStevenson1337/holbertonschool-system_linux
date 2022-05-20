@@ -18,6 +18,6 @@
 
 void listFiles(const char *dirname);
 void error_handler(int error, const char *path, const char *filename);
-char *strremove(const char *filename, const char *path);
+
 
 #endif /*_HLS_H*/

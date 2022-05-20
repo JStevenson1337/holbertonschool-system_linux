@@ -41,14 +41,15 @@ void listFiles(const char *dirname)
 }
 
 /**
- * @brief Main function
- * @param argc Number of arguments
- * @param argv Array of arguments
+ * main - main function
+ * @argc: Number of arguments
+ * @argv: argv Array of arguments
  * @return 0 if success, -1 otherwise
  */
 int main(int argc, char *argv[])
 {
 	int i;
+
 	for (i = 1; i < argc; i++)
 	{
 		listFiles(argv[i]);
@@ -57,6 +58,6 @@ int main(int argc, char *argv[])
 	{
 		listFiles(".");
 	}
-	return 0;
+	return (0);
 }
 
