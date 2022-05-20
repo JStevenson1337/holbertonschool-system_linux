@@ -27,7 +27,7 @@ void listFiles(const char *dirname)
 			strcmp(entry->d_name, parent_directory) == 0)
 			continue;
 		sprintf(path, "%s/%s", dirname, entry->d_name);
-		if (stat(path, &statbuf) == -1)
+		if (lstat(path, &statbuf) == -1)
 		{
 			error_handler(errno, path, "hls");
 			continue;

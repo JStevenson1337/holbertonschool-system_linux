@@ -3,8 +3,6 @@
 
 #include <dirent.h>
 #include <errno.h>
-#include <grp.h>
-#include <pwd.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
