@@ -1,82 +1,62 @@
 #include "hls.h"
 
 
-/**
- * hls - Converts a directory to a list of files
- * @dir: The directory to convert
- * @op_a: option a
- * @op_1: option 1
-*/
-void hls(const char *dir, int op_a, int op_1)
-{
-	struct dirent *d;
-	DIR *dh = opendir(dir);
 
-	if (!dh)
+/**
+ * listFiles - list files in a directory
+ * @dirname: directory name
+ *
+ * Return: void
+ */
+void listFiles(const char *dirname)
+{
+	struct dirent *entry;
+	struct stat statbuf;
+	char path[1024] = {0};
+	DIR *dir;
+
+	dir = opendir(dirname);
+	if (dir == NULL)
 	{
-		if (errno == ENOENT)
-		{
-			perror("Directory doesn't exist");
-		}
-		else
-		{
-			perror("Unable to read directory");
-		}
-		exit(EXIT_FAILURE);
+		error_handler(errno, dirname, "hls");
+		return;
 	}
-	while ((d = readdir(dh)) != NULL)
+	while ((entry = readdir(dir)) != NULL)
 	{
-		if (!op_a && d->d_name[0] == '.')
+		if (strcmp(entry->d_name, current_directory) == 0 ||
+			strcmp(entry->d_name, parent_directory) == 0)
 			continue;
-		printf("%s  ", d->d_name);
-		if (op_1)
+		sprintf(path, "%s/%s", dirname, entry->d_name);
+		if (stat(path, &statbuf) == -1)
 		{
-			printf("\n");
+			error_handler(errno, path, "hls");
+			continue;
+		}
+		if (S_ISDIR(statbuf.st_mode) || S_ISREG(statbuf.st_mode))
+		{
+			printf("%s  ", entry->d_name);
 		}
 	}
-	if (!op_1)
-	printf("\n");
+	closedir(dir);
 }
 
 /**
- * main - main program
- * @argc: number of arguments
- * @argv: array of arguments
- * Return: List of nodes
-*/
-int main(int argc, const char *argv[])
+ * @brief Main function
+ * @param argc Number of arguments
+ * @param argv Array of arguments
+ * @return 0 if success, -1 otherwise
+ */
+int main(int argc, char *argv[])
 {
-
+	int i;
+	for (i = 1; i < argc; i++)
+	{
+		listFiles(argv[i]);
+	}
 	if (argc == 1)
 	{
-		hls(".", 0, 0);
+		listFiles(".");
 	}
-	else if (argc == 2)
-	{
-		if (argv[1][0] == '-')
-		{
-			int op_a = 0, op_1 = 0;
-			char *p = (char *)(argv[1] + 1);
-
-			while (*p)
-			{
-				if (*p == 'a')
-				{
-					op_a = 1;
-				}
-				else if (*p == '1')
-				{
-					op_1 = 1;
-				}
-				else
-				{
-					perror("Option not available");
-					exit(EXIT_FAILURE);
-				}
-				p++;
-			}
-			hls(".", op_a, op_1);
-		}
-	}
-	return (0);
+	return 0;
 }
+

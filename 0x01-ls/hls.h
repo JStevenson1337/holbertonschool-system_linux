@@ -13,28 +13,11 @@
 #include <time.h>
 #include <unistd.h>
 
+#define current_directory "."
+#define parent_directory ".."
 
-
-
-typedef struct error_handler_s
-{
-	char *directory;
-	int error;
-} error_handler_t;
-
-typedef struct stat_s
-{
-	char *name;
-	char *permissions;
-	char *links;
-	char *owner;
-	char *group;
-	char *size;
-	char *date;
-	char *time;
-	char *type;
-} stat_t;
-
-
+void listFiles(const char *dirname);
+void error_handler(int error, const char *path, const char *filename);
+char *strremove(const char *filename, const char *path);
 
 #endif /*_HLS_H*/
