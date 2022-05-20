@@ -1,0 +1,6 @@
+make --dry-run --keep-going --print-directory
+make: Entering directory '/home/jeremy/Projects/Holberton/holbertonschool-system_linux/0x02-getline'
+make: Leaving directory '/home/jeremy/Projects/Holberton/holbertonschool-system_linux/0x02-getline'
+ 
+Makefile:2: *** empty variable name.  Stop.
+

@@ -1,0 +1,32 @@
+!_TAG_FILE_FORMAT	2	/extended format; --format=1 will not append ;" to lines/
+!_TAG_FILE_SORTED	1	/0=unsorted, 1=sorted, 2=foldcase/
+!_TAG_OUTPUT_EXCMD	mixed	/number, pattern, mixed, or combineV2/
+!_TAG_OUTPUT_FILESEP	slash	/slash or backslash/
+!_TAG_OUTPUT_MODE	u-ctags	/u-ctags or e-ctags/
+!_TAG_PATTERN_LENGTH_LIMIT	96	/0 for no limit/
+!_TAG_PROC_CWD	/home/jeremy/Projects/Holberton/holbertonschool-system_linux/0x02-getline/	//
+!_TAG_PROGRAM_AUTHOR	Universal Ctags Team	//
+!_TAG_PROGRAM_NAME	Universal Ctags	/Derived from Exuberant Ctags/
+!_TAG_PROGRAM_URL	https://ctags.io/	/official site/
+!_TAG_PROGRAM_VERSION	5.9.0	//
+${FLAGS}	Makefile	/^${FLAGS}  = -Wall -Werror -Wextra and -pedantic$/;"	m
+${GCC}	Makefile	/^${GCC} = gcc ${FLAGS}$/;"	m
+GETLINE_H	_getline.h	/^#define GETLINE_H$/;"	d
+LAPS_H	laps.h	/^#define LAPS_H$/;"	d
+READ_SIZE	_getline.h	/^#define READ_SIZE /;"	d
+_getline	_getline.c	/^char *_getline(const int fd)$/;"	f	typeref:typename:char *
+car_s	laps.h	/^typedef struct car_s{$/;"	s
+car_t	laps.h	/^} car_t;$/;"	t	typeref:struct:car_s
+id	laps.h	/^	int id;$/;"	m	struct:car_s	typeref:typename:int
+laps	laps.h	/^	int laps;$/;"	m	struct:car_s	typeref:typename:int
+len	_getline.h	/^	size_t len;$/;"	m	struct:readline_s	typeref:typename:size_t
+line	_getline.h	/^	char *line;$/;"	m	struct:readline_s	typeref:typename:char *
+main	0-main.c	/^int main()$/;"	f	typeref:typename:int
+main	1-main.c	/^int main(void)$/;"	f	typeref:typename:int
+main	2-main.c	/^int main(void)$/;"	f	typeref:typename:int
+next	_getline.h	/^	struct readline_s *next;$/;"	m	struct:readline_s	typeref:struct:readline_s *
+next	laps.h	/^	struct car_s *next;$/;"	m	struct:car_s	typeref:struct:car_s *
+race_state	laps.c	/^void race_state(int *id, size_t size)$/;"	f	typeref:typename:void
+readline_s	_getline.h	/^typedef struct readline_s$/;"	s
+readline_t	_getline.h	/^} readline_t;$/;"	t	typeref:struct:readline_s
+size	_getline.h	/^	size_t size;$/;"	m	struct:readline_s	typeref:typename:size_t
