@@ -64,14 +64,14 @@ char *_getline(const int fd)
 			curr->size = 0;
 			return (line);
 		}
-		if (curr->line[curr->len] == '\n')
-		{
-			line = curr->line;
-			curr->line = NULL;
-			curr->len = 0;
-			curr->size = 0;
-			return (line);
-		}
+		// if (curr->line[curr->len] == '\n')
+		// {
+		// 	line = curr->line;
+		// 	curr->line = NULL;
+		// 	curr->len = 0;
+		// 	curr->size = 0;
+		// 	return (line);
+		// }
 		curr->len++;
 	}
 }
