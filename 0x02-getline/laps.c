@@ -10,25 +10,24 @@ void race_state(int *id, size_t size)
 	static car_t *cars;
 	car_t *next, *prev, *new;
 
-	if (size == 0) /* if size is 0, reset cars list */
+	if (size == 0)
 	{
 		for (; cars; cars = next)
 			next = cars->next, free(cars);
 		return;
 	}
 
-	for (; size--; id++) /* Loop through all ids */
+	for (; size--; id++)
 	{
-		/* For each id, stop when *id <= current node or list is done */
 		for (prev = NULL, next = cars; next; prev = next, next = next->next)
 			if (*id <= next->id)
 				break;
 
-		if (next && *id == next->id) /* If id found, increment laps */
+		if (next && *id == next->id)
 		{
 			next->laps += 1;
 		}
-		else /* else, add new node to list */
+		else
 		{
 			printf("Car %d joined the race\n", *id);
 			new = malloc(sizeof(car_t));
@@ -45,6 +44,6 @@ void race_state(int *id, size_t size)
 	}
 
 	printf("Race state:\n");
-	for (next = cars; next; next = next->next) /* Print list */
+	for (next = cars; next; next = next->next)
 		printf("Car %d [%d laps]\n", next->id, next->laps);
 }

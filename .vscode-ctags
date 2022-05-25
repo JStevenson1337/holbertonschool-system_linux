@@ -1,0 +1,51 @@
+!_TAG_FILE_FORMAT	2	/extended format; --format=1 will not append ;" to lines/
+!_TAG_FILE_SORTED	1	/0=unsorted, 1=sorted, 2=foldcase/
+!_TAG_OUTPUT_EXCMD	mixed	/number, pattern, mixed, or combineV2/
+!_TAG_OUTPUT_FILESEP	slash	/slash or backslash/
+!_TAG_OUTPUT_MODE	u-ctags	/u-ctags or e-ctags/
+!_TAG_PATTERN_LENGTH_LIMIT	96	/0 for no limit/
+!_TAG_PROC_CWD	/home/jeremy/Projects/Holberton/holbertonschool-system_linux/	//
+!_TAG_PROGRAM_AUTHOR	Universal Ctags Team	//
+!_TAG_PROGRAM_NAME	Universal Ctags	/Derived from Exuberant Ctags/
+!_TAG_PROGRAM_URL	https://ctags.io/	/official site/
+!_TAG_PROGRAM_VERSION	5.9.0	//
+${FLAGS}	0x02-getline/Makefile	/^${FLAGS}  = -Wall -Werror -Wextra and -pedantic$/;"	m
+${GCC}	0x02-getline/Makefile	/^${GCC} = gcc ${FLAGS}$/;"	m
+GETLINE_H	0x02-getline/_getline.h	/^#define GETLINE_H$/;"	d
+LAPS_H	0x02-getline/laps.h	/^#define LAPS_H$/;"	d
+READ_SIZE	0x02-getline/_getline.h	/^#define READ_SIZE /;"	d
+_HLS_H	0x01-ls/hls.h	/^#define _HLS_H$/;"	d
+_getline	0x02-getline/_getline.c	/^char *_getline(const int fd)$/;"	f	typeref:typename:char *
+_strcmp	0x01-ls/_strcmp.c	/^int _strcmp(char *s1, char *s2)$/;"	f	typeref:typename:int
+car_s	0x02-getline/laps.h	/^typedef struct car_s$/;"	s
+car_t	0x02-getline/laps.h	/^} car_t;$/;"	t	typeref:struct:car_s
+current_directory	0x01-ls/hls.h	/^#define current_directory /;"	d
+error_handler	0x01-ls/errors.c	/^void error_handler(int error, const char *path, const char *filename)$/;"	f	typeref:typename:void
+file_s	0x01-ls/hls.h	/^typedef struct file_s$/;"	s
+file_s	0x01-ls/hls.h	/^} file_s;$/;"	t	typeref:struct:file_s
+id	0x02-getline/laps.h	/^	int id;$/;"	m	struct:car_s	typeref:typename:int
+laps	0x02-getline/laps.h	/^	int laps;$/;"	m	struct:car_s	typeref:typename:int
+len	0x02-getline/_getline.h	/^	size_t len;$/;"	m	struct:readline_s	typeref:typename:size_t
+line	0x02-getline/_getline.h	/^	char *line;$/;"	m	struct:readline_s	typeref:typename:char *
+listFiles	0x01-ls/main.c	/^void listFiles(const char* dirname)$/;"	f	typeref:typename:void
+main	0x01-ls/main.c	/^int main(int argc, char **argv)$/;"	f	typeref:typename:int
+main	0x02-getline/0-main.c	/^int main()$/;"	f	typeref:typename:int
+main	0x02-getline/1-main.c	/^int main(void)$/;"	f	typeref:typename:int
+main	0x02-getline/2-main.c	/^int main(void)$/;"	f	typeref:typename:int
+next	0x01-ls/hls.h	/^	struct file_s *next;$/;"	m	struct:file_s	typeref:struct:file_s *
+next	0x02-getline/_getline.h	/^	struct readline_s *next;$/;"	m	struct:readline_s	typeref:struct:readline_s *
+next	0x02-getline/laps.h	/^	struct car_s *next;$/;"	m	struct:car_s	typeref:struct:car_s *
+parent_directory	0x01-ls/hls.h	/^#define parent_directory /;"	d
+prev	0x01-ls/hls.h	/^	struct file_s *prev;$/;"	m	struct:file_s	typeref:struct:file_s *
+print_list_1_by_1	0x01-ls/print.c	/^void print_list_1_by_1(const char *dirname)$/;"	f	typeref:typename:void
+print_list_normalized	0x01-ls/print.c	/^void print_list_normalized(const char *dirname)$/;"	f	typeref:typename:void
+print_list_rev	0x01-ls/print.c	/^void print_list_rev(const char *dirname)$/;"	f	typeref:typename:void
+print_list_size	0x01-ls/print.c	/^void print_list_size(const char *dirname)$/;"	f	typeref:typename:void
+print_list_time	0x01-ls/print.c	/^void print_list_time(const char *dirname)$/;"	f	typeref:typename:void
+race_state	0x02-getline/laps.c	/^void race_state(int *id, size_t size)$/;"	f	typeref:typename:void
+readline_s	0x02-getline/_getline.h	/^typedef struct readline_s$/;"	s
+readline_t	0x02-getline/_getline.h	/^} readline_t;$/;"	t	typeref:struct:readline_s
+size	0x01-ls/hls.h	/^	long int size;$/;"	m	struct:file_s	typeref:typename:long int
+size	0x02-getline/_getline.h	/^	size_t size;$/;"	m	struct:readline_s	typeref:typename:size_t
+time	0x01-ls/hls.h	/^	unsigned long int time;$/;"	m	struct:file_s	typeref:typename:unsigned long int
+var	0x01-ls/hls.h	/^	char *var;$/;"	m	struct:file_s	typeref:typename:char *

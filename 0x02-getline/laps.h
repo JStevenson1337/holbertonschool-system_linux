@@ -10,7 +10,8 @@
  * @laps: laps the car has completed
  * @next: pointer to next car struct
  **/
-typedef struct car_s{
+typedef struct car_s
+{
 	int id;
 	int laps;
 	struct car_s *next;
