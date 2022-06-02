@@ -1,4 +1,6 @@
 make all --print-data-base --no-builtin-variables --no-builtin-rules --question
+Makefile:2: *** empty variable name.  Stop.
+
 # GNU Make 4.3
 # Built for x86_64-pc-linux-gnu
 # Copyright (C) 1988-2020 Free Software Foundation, Inc.
@@ -6,32 +8,26 @@ make all --print-data-base --no-builtin-variables --no-builtin-rules --question
 # This is free software: you are free to change and redistribute it.
 # There is NO WARRANTY, to the extent permitted by law.
 
-# Make data base, printed on Thu May 19 23:32:12 2022
+# Make data base, printed on Wed Jun  1 17:15:05 2022
 
 # Variables
 
-# environment
-TMUX_PANE = %3
 # environment
 GDK_BACKEND = x11
 # environment
 LC_ALL = C
 # environment
-NO_AT_BRIDGE = 1
-# environment
 GNOME_SHELL_SESSION_MODE = pop
 # environment
 SSH_AGENT_LAUNCHER = gnome-keyring
 # environment
-TERMINATOR_DBUS_NAME = net.tenshu.Terminator23558193cd9818af7fe4d2c2f5bd9d00f
+GJS_DEBUG_OUTPUT = stderr
 # environment
-VSCODE_IPC_HOOK_EXTHOST = /run/user/1000/vscode-ipc-9ba26ae0-428e-429f-bcaf-463e319cf5a6.sock
+VSCODE_IPC_HOOK_EXTHOST = /run/user/1000/vscode-ipc-f60a9876-2f50-41a3-ac0c-0b37f943c92e.sock
 # environment
-VSCODE_CWD = /home/jeremy/Projects/Holberton/holbertonschool-system_linux/0x02-getline
+VSCODE_CWD = /home/jeremy
 # environment
 WINDOWPATH = 2
-# environment
-TERMINATOR_UUID = urn:uuid:c4dd5d49-5e9c-49c5-b574-7ce756c8d0a5
 # environment
 LIBVIRT_DEFAULT_URI = qemu:///system
 # default
@@ -53,7 +49,7 @@ LSCOLORS = Gxfxcxdxbxegedabagacad
 # environment
 XDG_DATA_DIRS = /usr/share/pop:/usr/share/gnome:/home/jeremy/.local/share/flatpak/exports/share:/var/lib/flatpak/exports/share:/usr/local/share/:/usr/share/
 # environment
-OLDPWD = /home/jeremy/Projects/Holberton
+OLDPWD = /home/jeremy
 # automatic
 ^D = $(patsubst %/,%,$(dir $^))
 # environment
@@ -72,8 +68,6 @@ XAUTHORITY = /run/user/1000/gdm/Xauthority
 .INCLUDE_DIRS = /usr/local/include /usr/include /usr/include
 # makefile
 MAKEFLAGS = pqrR
-# environment
-TERMINATOR_DBUS_PATH = /net/tenshu/Terminator2
 # makefile
 CURDIR := /home/jeremy/Projects/Holberton/holbertonschool-system_linux/0x02-getline
 # environment
@@ -81,13 +75,13 @@ VSCODE_PIPE_LOGGING = true
 # environment
 APPLICATION_INSIGHTS_NO_DIAGNOSTIC_CHANNEL = 1
 # environment
-ZSH_TMUX_TERM = screen-256color
+ZSH_TMUX_TERM = screen
 # automatic
 *D = $(patsubst %/,%,$(dir $*))
 # environment
 MFLAGS = -pqrR
 # environment
-SSH_AUTH_SOCK = /tmp/ssh-XXXXXXJKFcrv/agent.6614
+SSH_AUTH_SOCK = /tmp/ssh-XXXXXXd8RwWB/agent.5011
 # default
 .SHELLFLAGS := -c
 # environment
@@ -107,23 +101,19 @@ ZSH = /home/jeremy/.oh-my-zsh
 # environment
 VSCODE_VERBOSE_LOGGING = true
 # environment
-VSCODE_PID = 451114
+VSCODE_PID = 4887
 # environment
 XDG_SESSION_TYPE = x11
-# environment
-TMUX = /tmp/tmux-1000/default,24278,0
 # automatic
 ?D = $(patsubst %/,%,$(dir $?))
 # environment
-SESSION_MANAGER = local/dt1:@/tmp/.ICE-unix/3725,unix/dt1:/tmp/.ICE-unix/3725
+SESSION_MANAGER = local/dt1:@/tmp/.ICE-unix/3599,unix/dt1:/tmp/.ICE-unix/3599
 # environment
 MARKPATH = /home/jeremy/.marks
 # automatic
 *F = $(notdir $*)
 # environment
 ANT_ARGS = -logger org.apache.tools.ant.listener.AnsiColorLogger
-# environment
-IBUS_DISABLE_SNOOPER = 1
 # environment
 CHROME_DESKTOP = code-url-handler.desktop
 # environment
@@ -143,7 +133,9 @@ MAKECMDGOALS := all
 # environment
 XMODIFIERS = @im=ibus
 # environment
-SHLVL = 2
+GJS_DEBUG_TOPICS = JS ERROR;JS LOG
+# environment
+SHLVL = 0
 # environment
 MAKELEVEL := 0
 # environment
@@ -151,19 +143,17 @@ ZSH_TMUX_CONFIG = /home/jeremy/.tmux.conf
 # default
 MAKE = $(MAKE_COMMAND)
 # environment
-PATH = /home/jeremy/.cargo/bin:/home/jeremy/.local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin:/home/jeremy/.local/bin:/home/jeremy/.local/bin
+PATH = /home/jeremy/.cargo/bin:/home/jeremy/.local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin:/home/jeremy/.local/bin
 # default
 MAKEFILES := 
 # automatic
 ^F = $(notdir $^)
 # environment
-INVOCATION_ID = 2acfa9e867ba42768298fb7ffbfed61c
+INVOCATION_ID = cc6786aaa74e475f92dceb719ca44d2b
 # environment
 VSCODE_LOG_NATIVE = false
 # environment
 USERNAME = jeremy
-# environment
-TERM_PROGRAM = tmux
 # automatic
 ?F = $(notdir $?)
 # environment
@@ -171,7 +161,7 @@ GTK_IM_MODULE = ibus
 # environment
 XDG_CURRENT_DESKTOP = Unity
 # environment
-LS_COLORS = rs=0:di=01;34:ln=01;36:mh=00:pi=40;33:so=01;35:do=01;35:bd=40;33;01:cd=40;33;01:or=40;31;01:mi=00:su=37;41:sg=30;43:ca=30;41:tw=30;42:ow=34;42:st=37;44:ex=01;32:*.tar=01;31:*.tgz=01;31:*.arc=01;31:*.arj=01;31:*.taz=01;31:*.lha=01;31:*.lz4=01;31:*.lzh=01;31:*.lzma=01;31:*.tlz=01;31:*.txz=01;31:*.tzo=01;31:*.t7z=01;31:*.zip=01;31:*.z=01;31:*.dz=01;31:*.gz=01;31:*.lrz=01;31:*.lz=01;31:*.lzo=01;31:*.xz=01;31:*.zst=01;31:*.tzst=01;31:*.bz2=01;31:*.bz=01;31:*.tbz=01;31:*.tbz2=01;31:*.tz=01;31:*.deb=01;31:*.rpm=01;31:*.jar=01;31:*.war=01;31:*.ear=01;31:*.sar=01;31:*.rar=01;31:*.alz=01;31:*.ace=01;31:*.zoo=01;31:*.cpio=01;31:*.7z=01;31:*.rz=01;31:*.cab=01;31:*.wim=01;31:*.swm=01;31:*.dwm=01;31:*.esd=01;31:*.jpg=01;35:*.jpeg=01;35:*.mjpg=01;35:*.mjpeg=01;35:*.gif=01;35:*.bmp=01;35:*.pbm=01;35:*.pgm=01;35:*.ppm=01;35:*.tga=01;35:*.xbm=01;35:*.xpm=01;35:*.tif=01;35:*.tiff=01;35:*.png=01;35:*.svg=01;35:*.svgz=01;35:*.mng=01;35:*.pcx=01;35:*.mov=01;35:*.mpg=01;35:*.mpeg=01;35:*.m2v=01;35:*.mkv=01;35:*.webm=01;35:*.webp=01;35:*.ogm=01;35:*.mp4=01;35:*.m4v=01;35:*.mp4v=01;35:*.vob=01;35:*.qt=01;35:*.nuv=01;35:*.wmv=01;35:*.asf=01;35:*.rm=01;35:*.rmvb=01;35:*.flc=01;35:*.avi=01;35:*.fli=01;35:*.flv=01;35:*.gl=01;35:*.dl=01;35:*.xcf=01;35:*.xwd=01;35:*.yuv=01;35:*.cgm=01;35:*.emf=01;35:*.ogv=01;35:*.ogx=01;35:*.aac=00;36:*.au=00;36:*.flac=00;36:*.m4a=00;36:*.mid=00;36:*.midi=00;36:*.mka=00;36:*.mp3=00;36:*.mpc=00;36:*.ogg=00;36:*.ra=00;36:*.wav=00;36:*.oga=00;36:*.opus=00;36:*.spx=00;36:*.xspf=00;36:
+LS_COLORS = 
 # automatic
 +F = $(notdir $+)
 # environment
@@ -184,10 +174,12 @@ ORIGINAL_XDG_CURRENT_DESKTOP = pop:GNOME
 GNUMAKEFLAGS := 
 # environment
 LOGNAME = jeremy
+# environment
+GIO_LAUNCHED_DESKTOP_FILE = /usr/share/applications/code.desktop
 # makefile
 .DEFAULT_GOAL := 
 # environment
-SYSTEMD_EXEC_PID = 3986
+SYSTEMD_EXEC_PID = 3631
 # environment
 DISPLAY = :1
 # environment
@@ -197,29 +189,25 @@ GTK_MODULES = gail:atk-bridge:appmenu-gtk-module
 # default
 MAKE_VERSION := 4.3
 # environment
-MANAGERPID = 3427
+MANAGERPID = 3302
 # environment
-GIO_LAUNCHED_DESKTOP_FILE_PID = 6539
+GIO_LAUNCHED_DESKTOP_FILE_PID = 4887
 # environment
-SSH_AGENT_PID = 6616
+SSH_AGENT_PID = 5013
 # environment
 PAGER = less
 # environment
-_ = /usr/bin/code
+_ = /usr/share/code/code
 # environment
 XDG_RUNTIME_DIR = /run/user/1000
 # environment
 GPG_AGENT_INFO = /run/user/1000/gnupg/S.gpg-agent:0:1
 # environment
-COLORTERM = truecolor
-# environment
-JOURNAL_STREAM = 8:49671
+JOURNAL_STREAM = 8:54450
 # environment
 XDG_SESSION_CLASS = user
 # environment
 VSCODE_AMD_ENTRYPOINT = vs/workbench/api/node/extensionHostProcess
-# environment
-TILIX_ID = 5cfc3bf4-ae9b-4c55-8103-515d4928361f
 # environment
 HOME = /home/jeremy
 # environment
@@ -228,30 +216,20 @@ QT_IM_MODULE = ibus
 ELECTRON_RUN_AS_NODE = 1
 # environment
 VSCODE_IPC_HOOK = /run/user/1000/vscode-13c5c0cd-1.67.2-main.sock
-# environment
-TERM = tmux-256color
 # default
 .RECIPEPREFIX := 
 # automatic
 <F = $(notdir $<)
 # default
 SUFFIXES := 
-# environment
-VSCODE_CLI = 1
-# environment
-ELECTRON_NO_ATTACH_CONSOLE = 1
-# environment
-VTE_VERSION = 6800
 # default
 .FEATURES := target-specific order-only second-expansion else-if shortest-stem undefine oneshell nocomment grouped-target extra-prereqs archives jobserver output-sync check-symlink load
 # environment
 XDG_MENU_PREFIX = gnome-
 # environment
-TERM_PROGRAM_VERSION = 3.2a
-# environment
 GDMSESSION = pop
 # variable set hash-table stats:
-# Load=120/1024=12%, Rehash=0, Collisions=9/134=7%
+# Load=108/1024=11%, Rehash=0, Collisions=7/122=6%
 
 # Pattern-specific Variable Values
 
@@ -259,9 +237,9 @@ GDMSESSION = pop
 
 # Directories
 
-# . (device 2051, inode 17053954): 15 files, no impossibilities.
+# . (device 2051, inode 17053954): 23 files, no impossibilities.
 
-# 15 files, no impossibilities in 1 directories.
+# 23 files, no impossibilities in 1 directories.
 
 # Implicit Rules
 
@@ -277,9 +255,6 @@ Makefile:
 
 # Not a target:
 .DEFAULT:
- 
-Makefile:2: *** empty variable name.  Stop.
-
 #  Implicit rule search has not been done.
 #  Modification time never checked.
 #  File has not been updated.
@@ -299,12 +274,12 @@ all:
 
 # No general ('VPATH' variable) search path.
 
-# strcache buffers: 1 (0) / strings = 20 / storage = 178 B / avg = 8 B
-# current buf: size = 8162 B / used = 178 B / count = 20 / avg = 8 B
+# strcache buffers: 1 (0) / strings = 28 / storage = 441 B / avg = 15 B
+# current buf: size = 8162 B / used = 441 B / count = 28 / avg = 15 B
 
-# strcache performance: lookups = 24 / hit rate = 16%
+# strcache performance: lookups = 32 / hit rate = 12%
 # hash-table stats:
-# Load=20/8192=0%, Rehash=0, Collisions=0/24=0%
-# Finished Make data base on Thu May 19 23:32:12 2022
+# Load=28/8192=0%, Rehash=0, Collisions=0/32=0%
+# Finished Make data base on Wed Jun  1 17:15:05 2022
 
  

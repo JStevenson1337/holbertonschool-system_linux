@@ -8,23 +8,19 @@
  */
 char *_getline(const int fd)
 {
-	static readline_t *head = NULL;
+	static readline_t *head;
 	readline_t *curr = head;
 	char *line = NULL;
-	ssize_t read_bytes; /* number of bytes read signed sized_t*/
-
+	ssize_t read_bytes;
 
 	if (fd < 0)
-
 		return (NULL);
 
 	while (1)
 	{
 		if (curr == NULL)
 		{
-			curr = malloc(sizeof(readline_t)); /* allocate memory for 
-			print()
-			new node */
+			curr = malloc(sizeof(readline_t));
 			if (curr == NULL)
 				return (NULL);
 			curr->line = NULL;
@@ -79,6 +75,3 @@ char *_getline(const int fd)
 		}
 	}
 }
-
-
-

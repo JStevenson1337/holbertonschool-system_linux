@@ -1,7 +1,4 @@
 #include "hls.h"
-
-
-
 /**
  * listFiles - list files in a directory
  * @dirname: directory name
@@ -51,4 +48,3 @@ int main(int argc, char **argv)
 	}
 	return (0);
 }
-
