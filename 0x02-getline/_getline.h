@@ -9,15 +9,16 @@
 
 #define READ_SIZE 1024
 
-
-char *_getline(const int fd);
-
 typedef struct readline_s
 {
+	char fd;
 	char *line;
-	size_t len;
-	size_t size;
+	ssize_t size;
 	struct readline_s *next;
 } readline_t;
+
+char *another_one(readline_t *curr);
+char *_getline(const int fd);
+
 
 #endif /* GETLINE_H */
