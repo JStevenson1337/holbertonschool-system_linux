@@ -5,30 +5,37 @@
  *
  * Return: void
  */
-void listFiles(const char* dirname)
+void listFiles(char* dirname)
 {
 	DIR *dir;
 	struct dirent *entry;
-	struct stat *statbuf;
+	file_t *file;
 
 	if (!(dir = opendir(dirname)))
-		print_error_exit("opendir");
+		print_error_exit("hls: cannot open directory: ");
 	while ((entry = readdir(dir)))
 	{
-		statbuf = malloc(sizeof(struct stat));
-		if (!statbuf)
-			print_error_exit("malloc");
-		if (lstat(entry->d_name, statbuf) == -1)
-			print_error_exit("lstat");
-		if (_strcmp(entry->d_name, ".") == 0 ||
-			_strcmp(entry->d_name, "..") == 0)
-			continue;
-		printf("%s ", entry->d_name);
+		if (entry->d_name[0] != '.')
+		{
+			file = malloc(sizeof(BUF_SIZE));
+			if (!file)
+				print_error_exit("hls: malloc error: ");
+			file->name = entry->d_name;
+			file->statbuf = malloc(sizeof(struct stat));
+			if (!file->statbuf)
+				print_error_exit("hls: malloc error: ");
+			if (stat(entry->d_name, file->statbuf) == -1)
+				print_error_exit("hls: cannot access: ");
+			if (S_ISDIR(file->statbuf->st_mode))
+				listFiles(entry->d_name);
+			else
+				printFile(file);
+		}
 	}
-	printf("\n");
 	closedir(dir);
-	free(statbuf);
 }
+
+
 /**
  * main - main function
  * @argc: Number of arguments
@@ -37,34 +44,41 @@ void listFiles(const char* dirname)
  */
 int main(int argc, char **argv)
 {
-	char *dirname;
+	char *dirname = "cd";
 	int flags = 0;
 	int i = 0;
-	int j = 0;
 
 	if (argc > 1)
 	{
-		for (i = 1; i < argc; i++)
-		{
-			if (argv[i][0] == '-')
-			{
-				for (j = 1; argv[i][j] != '\0'; j++)
-				{
-					if (argv[i][j] == 'a' || argv[i][j] == '1')
-						flags |= 1;
-
-				}
-			}
-			else
-			{
-				dirname = argv[i];
-				listFiles(dirname);
-			}
-		}
+		dirname = argv[1];
+		i = 2;
 	}
-	else
+	if (argc > 2)
 	{
-		listFiles(cd);
+		flags = parse_flags(&i);
 	}
+	if (flags == -1)
+	{
+		print_error_exit("hls: invalid option -- '%c'\n");
+	}
+	listFiles(dirname);
 	return (0);
+}
+
+int parse_flags(int *flags)
+{
+	int i = 0;
+	int ret = 0;
+	char *flags_str = "1lRartu";
+
+	while (flags_str[i] != '\0')
+	{
+		if (*flags == flags_str[i])
+		{
+			ret = flags_str[i];
+			break;
+		}
+		i++;
+	}
+	return (ret);
 }

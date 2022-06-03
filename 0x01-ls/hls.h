@@ -30,31 +30,28 @@
 #define pd ".."
 
 
-typedef struct File
+typedef struct file_s
 {
 	char *name;
 	struct stat *statbuf;
-} File;
-
-#define FILE_INIT {NULL, NULL}
+} file_t;
 
 /**
  * struct file_s - doubly linked list
  * @File: File struct
  * @next: points to the next node
  * @prev: points to the prev node
- * @var: environment variables.
- * Description: singly linked list node to store the env
+ * Description: doubly linked list node structure
  */
-typedef struct file_s
+typedef struct node_t
 {
-	File *file;
-	struct file_s *next;
-	struct file_s *prev;
-} file_s;
+	file_t *file;
+	struct node_t *next;
+	struct node_t *prev;
+} node_t;
 
 int main(int argc, char **argv);
-void listFiles(const char* dirname);
+void listFiles(char* dirname);
 int parse_flags(int *flags);
 
 /* error handling error.c*/
@@ -66,5 +63,9 @@ void error_bad_option(char c);
 /* Helper function to print the file information */
 /* _strcmp.c */
 int _strcmp(char *s1, char *s2);
+int _strncpy(char *s1, char *s2, int n);
+int _strlen(char *s);
 
+/* print.c */
+void printFile(file_t *file);
 #endif /*_HLS_H*/
