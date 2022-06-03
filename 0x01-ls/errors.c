@@ -1,32 +1,19 @@
 #include "hls.h"
 
-
-/**
- * error_handler - print error message and exit
- * @error: error number
- * @path: path to file
- * @filename: name of file
- * Return: void
- */
-void error_handler(int error, const char *path, const char *filename)
+void error_handler(const char *msg)
 {
-	if (error == -1)
-	{
-		if (errno == ENOENT)
-		{
-			printf("%s: %s: No such file or directory\n", filename, path);
-		}
-		else if (errno == ENOTDIR)
-		{
-			printf("%s: %s: Not a directory\n", filename, path);
-		}
-		else if (errno == EACCES)
-		{
-			printf("%s: %s: Permission denied\n", filename, path);
-		}
-		else
-		{
-			printf("%s: %s: %s\n", filename, path, strerror(errno));
-		}
-	}
+	fprintf(stderr, "%s", msg);
+	exit(1);
+}
+
+void print_error_exit(const char *msg)
+{
+	error_handler(msg);
+	exit(1);
+}
+
+void error_bad_option(char c)
+{
+	fprintf(stderr, "hls: invalid option -- '%c'\n", c);
+	exit(1);
 }
