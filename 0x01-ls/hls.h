@@ -29,6 +29,15 @@
 #define cd "."
 #define pd ".."
 
+#define FLAG_1 0001
+#define FLAG_a 0010
+#define FLAG_A 0100
+#define FLAG_l 1000
+#define FLAG_R 1100
+#define FLAG_r 0101
+#define FLAG_S 0111
+#define FLAG_t 1111
+#define FILE_INIT {NULL, NULL}
 
 typedef struct file_s
 {
@@ -47,18 +56,19 @@ typedef struct node_t
 {
 	file_t *file;
 	struct node_t *next;
-	struct node_t *prev;
 } node_t;
+
 
 int main(int argc, char **argv);
 void listFiles(char* dirname);
-int parse_flags(int *flags);
+void parse_flags(int *flags, int *i);
+char *base_name(char *fullpath);
 
 /* error handling error.c*/
 /* error.c */
 void error_handler(const char *msg);
 void print_error_exit(const char *msg);
-void error_bad_option(char c);
+void error_bad_FLAG(int *argv);
 
 /* Helper function to print the file information */
 /* _strcmp.c */
@@ -68,4 +78,11 @@ int _strlen(char *s);
 
 /* print.c */
 void printFile(file_t *file);
+
+/* nodebuilder.c */
+node_t *create_node(file_t *file);
+node_t *add_node(node_t *node, file_t *file);
+node_t *add_node_end(node_t *node, file_t *file);
+void free_node(node_t *node);
+
 #endif /*_HLS_H*/

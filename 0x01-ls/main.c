@@ -44,41 +44,90 @@ void listFiles(char* dirname)
  */
 int main(int argc, char **argv)
 {
-	char *dirname = "cd";
 	int flags = 0;
-	int i = 0;
+	int i = 1;
+	char *dirname = cd;
+	node_t *head = NULL;
+	node_t *tmp = NULL;
 
-	if (argc > 1)
+	if (argc == 1)
 	{
-		dirname = argv[1];
-		i = 2;
+		listFiles(dirname);
+		return (0);
 	}
-	if (argc > 2)
+	else if (argc == 2)
 	{
-		flags = parse_flags(&i);
+		if (argv[1][0] == '-')
+		{
+			parse_flags(&flags, &i);
+			listFiles(dirname);
+			return (0);
+		}
+		else
+		{
+			dirname = argv[1];
+			listFiles(dirname);
+			return (0);
+		}
+
 	}
-	if (flags == -1)
+	else if (argc > 2)
 	{
-		print_error_exit("hls: invalid option -- '%c'\n");
+		parse_flags(&flags, &i);
+		while (i < argc)
+		{
+			if (argv[i][0] == '-')
+			{
+				error_bad_FLAG(&argv[i][0]);
+			}
+			else
+			{
+				dirname = argv[i];
+				listFiles(dirname);
+			}
+			i++;
+		}
 	}
-	listFiles(dirname);
 	return (0);
 }
 
-int parse_flags(int *flags)
+void parse_flags(int *flags, int *argv)
 {
-	int i = 0;
-	int ret = 0;
-	char *flags_str = "1lRartu";
-
-	while (flags_str[i] != '\0')
+	while (*++argv)
+	switch (*argv)
 	{
-		if (*flags == flags_str[i])
-		{
-			ret = flags_str[i];
-			break;
-		}
-		i++;
+	case '1':
+		*flags |= FLAG_1;
+		break;
+	default:
+		error_bad_FLAG(argv);
+		free(flags);
+		break;
 	}
-	return (ret);
+}
+
+/**
+ * base_name - returns pointer to base name of file
+ * @fullpath: the full path file name
+ * Return: pointer to base name of string
+ */
+char *base_name(char *fullpath)
+{
+	char *p;
+
+	if (!fullpath)
+		return (NULL);
+	if (!*fullpath)
+		return (fullpath);
+	p = fullpath + _strlen(fullpath) - 1;
+	for (; p >= fullpath; p--)
+	{
+		if (*p == '/')
+		{
+			if (*(p + 1))
+				return (p + 1);
+			return (p);
+		}
+	}
+	return (fullpath);
 }
