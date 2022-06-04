@@ -9,27 +9,29 @@ void listFiles(char* dirname)
 {
 	DIR *dir;
 	struct dirent *entry;
-	file_t *file;
+	struct stat statbuf;
 
-	if (!(dir = opendir(dirname)))
-		print_error_exit("hls: cannot open directory: ");
-	while ((entry = readdir(dir)))
+	if ((dir = opendir(dirname)) == NULL)
 	{
-		if (entry->d_name[0] != '.')
+		print_error_exit("hls: opendir error: ");
+	}
+	while ((entry = readdir(dir)) != NULL)
+	{
+		if (stat(entry->d_name, &statbuf) == -1)
 		{
-			file = malloc(sizeof(BUF_SIZE));
-			if (!file)
-				print_error_exit("hls: malloc error: ");
-			file->name = entry->d_name;
-			file->statbuf = malloc(sizeof(struct stat));
-			if (!file->statbuf)
-				print_error_exit("hls: malloc error: ");
-			if (stat(entry->d_name, file->statbuf) == -1)
-				print_error_exit("hls: cannot access: ");
-			if (S_ISDIR(file->statbuf->st_mode))
-				listFiles(entry->d_name);
-			else
-				printFile(file);
+			print_error_exit("hls: stat error: ");
+		}
+		if (S_ISDIR(statbuf.st_mode))
+		{
+			if (_strcmp(".", entry->d_name) == 0 ||
+				_strcmp("..", entry->d_name) == 0)
+				continue;
+			printf("%s ", entry->d_name);
+			listFiles(entry->d_name);
+		}
+		else
+		{
+			printf("%s ", entry->d_name);
 		}
 	}
 	closedir(dir);
@@ -44,68 +46,26 @@ void listFiles(char* dirname)
  */
 int main(int argc, char **argv)
 {
-	int flags = 0;
-	int i = 1;
-	char *dirname = cd;
-	node_t *head = NULL;
-	node_t *tmp = NULL;
-
-	if (argc == 1)
+	if (argc != 2)
 	{
-		listFiles(dirname);
-		return (0);
+		print_error_exit("hls: usage: hls directory\n");
 	}
-	else if (argc == 2)
-	{
-		if (argv[1][0] == '-')
-		{
-			parse_flags(&flags, &i);
-			listFiles(dirname);
-			return (0);
-		}
-		else
-		{
-			dirname = argv[1];
-			listFiles(dirname);
-			return (0);
-		}
-
-	}
-	else if (argc > 2)
-	{
-		parse_flags(&flags, &i);
-		while (i < argc)
-		{
-			if (argv[i][0] == '-')
-			{
-				error_bad_FLAG(&argv[i][0]);
-			}
-			else
-			{
-				dirname = argv[i];
-				listFiles(dirname);
-			}
-			i++;
-		}
-	}
+	listFiles(fullpath(argv[1]));
 	return (0);
 }
 
 void parse_flags(int *flags, int *argv)
 {
-	while (*++argv)
-	switch (*argv)
+	int i;
+
+	for (i = 1; i < argc; i++)
 	{
-	case '1':
-		*flags |= FLAG_1;
-		break;
-	default:
-		error_bad_FLAG(argv);
-		free(flags);
-		break;
+		if (argv[i][0] == '-')
+		{
+			parse_flag(argv[i], flags);
+		}
 	}
 }
-
 /**
  * base_name - returns pointer to base name of file
  * @fullpath: the full path file name
@@ -113,21 +73,28 @@ void parse_flags(int *flags, int *argv)
  */
 char *base_name(char *fullpath)
 {
-	char *p;
+	char *ptr;
 
-	if (!fullpath)
-		return (NULL);
-	if (!*fullpath)
+	ptr = strrchr(fullpath, '/');
+	if (ptr == NULL)
 		return (fullpath);
-	p = fullpath + _strlen(fullpath) - 1;
-	for (; p >= fullpath; p--)
+	return (ptr + 1);
+}
+
+void parse_flag(char *flag, int *flags)
+{
+	int i;
+
+	for (i = 1; flag[i] != '\0'; i++)
 	{
-		if (*p == '/')
+		switch (flag[i])
 		{
-			if (*(p + 1))
-				return (p + 1);
-			return (p);
+		case '1':
+			flags[0] |= 0001;
+			break;
+		case 'a':
+			flags[0] |= 0010;
+			break;
 		}
 	}
-	return (fullpath);
 }

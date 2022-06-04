@@ -11,6 +11,7 @@
 #include <pwd.h>
 #include <grp.h>
 #include <time.h>
+#include <string.h>
 
 #define PROG_NAME "hls"
 #define BUF_SIZE 1024
@@ -37,13 +38,7 @@
 #define FLAG_r 0101
 #define FLAG_S 0111
 #define FLAG_t 1111
-#define FILE_INIT {NULL, NULL}
 
-typedef struct file_s
-{
-	char *name;
-	struct stat *statbuf;
-} file_t;
 
 /**
  * struct file_s - doubly linked list
@@ -52,10 +47,12 @@ typedef struct file_s
  * @prev: points to the prev node
  * Description: doubly linked list node structure
  */
-typedef struct node_t
+typedef struct node_s
 {
-	file_t *file;
-	struct node_t *next;
+	char *dirname;
+	char *fullpath;
+	struct stat *statbuf;
+	node_t *next;++
 } node_t;
 
 
@@ -68,7 +65,7 @@ char *base_name(char *fullpath);
 /* error.c */
 void error_handler(const char *msg);
 void print_error_exit(const char *msg);
-void error_bad_FLAG(int *argv);
+
 
 /* Helper function to print the file information */
 /* _strcmp.c */
@@ -77,12 +74,7 @@ int _strncpy(char *s1, char *s2, int n);
 int _strlen(char *s);
 
 /* print.c */
-void printFile(file_t *file);
 
 /* nodebuilder.c */
-node_t *create_node(file_t *file);
-node_t *add_node(node_t *node, file_t *file);
-node_t *add_node_end(node_t *node, file_t *file);
-void free_node(node_t *node);
-
+node_t *create_node(char *dirname, char *fullpath, struct stat *statbuf);
 #endif /*_HLS_H*/
