@@ -46,26 +46,29 @@ void listFiles(char* dirname)
  */
 int main(int argc, char **argv)
 {
-	if (argc != 2)
+	int i, flags[3];
+	char *dirname;
+
+	if (argc < 2)
 	{
-		print_error_exit("hls: usage: hls directory\n");
+		listFiles(".");
+		return (0);
 	}
-	listFiles(fullpath(argv[1]));
-	return (0);
-}
-
-void parse_flags(int *flags, int *argv)
-{
-	int i;
-
 	for (i = 1; i < argc; i++)
 	{
 		if (argv[i][0] == '-')
 		{
-			parse_flag(argv[i], flags);
+			parse_flags(flags, &i);
+		}
+		else
+		{
+			dirname = argv[i];
+			listFiles(dirname);
 		}
 	}
+	return (0);
 }
+
 /**
  * base_name - returns pointer to base name of file
  * @fullpath: the full path file name

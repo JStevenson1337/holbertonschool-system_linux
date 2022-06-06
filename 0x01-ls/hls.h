@@ -49,17 +49,21 @@
  */
 typedef struct node_s
 {
+	struct stat stat;
 	char *dirname;
 	char *fullpath;
-	struct stat *statbuf;
-	node_t *next;++
+	struct node_s *next;
+	struct node_s *prev;
 } node_t;
 
+
+void parse_flag(char *flag, int *flags);
 
 int main(int argc, char **argv);
 void listFiles(char* dirname);
 void parse_flags(int *flags, int *i);
 char *base_name(char *fullpath);
+void parse_flag(char *flag, int *flags);
 
 /* error handling error.c*/
 /* error.c */

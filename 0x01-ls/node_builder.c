@@ -2,15 +2,18 @@
 
 node_t *create_node(char *dirname, char *fullpath, struct stat *statbuf)
 {
-    node_t *node = malloc(sizeof(node_t));
+    node_t *node;
+
+    node = malloc(sizeof(node_t));
     if (node == NULL)
     {
-        error_handler("hls: malloc error: ");
+        print_error_exit("hls: malloc error: ");
     }
     node->dirname = dirname;
     node->fullpath = fullpath;
-    node->statbuf = statbuf;
+    node->stat = *statbuf;
     node->next = NULL;
-    return (node);d
+    node->prev = NULL;
+    return (node);
 }
 
