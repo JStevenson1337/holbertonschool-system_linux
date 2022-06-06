@@ -7,36 +7,49 @@
  */
 void listFiles(char* dirname)
 {
-	DIR *dir;
-	struct dirent *entry;
+	DIR* dir = opendir(dirname);
+	struct dirent* entry;
 	struct stat statbuf;
+	char *fullpath;
 
-	if ((dir = opendir(dirname)) == NULL)
+	if (dir == NULL)
 	{
 		print_error_exit("hls: opendir error: ");
 	}
+
 	while ((entry = readdir(dir)) != NULL)
 	{
-		if (stat(entry->d_name, &statbuf) == -1)
+		if (entry->d_name[0] == '.')
 		{
-			print_error_exit("hls: stat error: ");
+			continue;
+		}
+		fullpath = malloc(strlen(dirname) + strlen(entry->d_name) + 2);
+		if (fullpath == NULL)
+		{
+			print_error_exit("hls: malloc error: ");
+		}
+		sprintf(fullpath, "%s/%s", dirname, entry->d_name);
+		if (lstat(fullpath, &statbuf) == -1)
+		{
+			print_error_exit("hls: lstat error: ");
 		}
 		if (S_ISDIR(statbuf.st_mode))
 		{
-			if (_strcmp(".", entry->d_name) == 0 ||
-				_strcmp("..", entry->d_name) == 0)
-				continue;
-			printf("%s ", entry->d_name);
-			listFiles(entry->d_name);
+			listFiles(fullpath);
 		}
 		else
 		{
-			printf("%s ", entry->d_name);
+			node_t *node = create_node(entry->d_name, fullpath, &statbuf);
+			if (node == NULL)
+			{
+				print_error_exit("hls: malloc error: ");
+			}
+			add_node(node);
 		}
+		free(fullpath);
 	}
 	closedir(dir);
 }
-
 
 /**
  * main - main function
@@ -84,7 +97,7 @@ char *base_name(char *fullpath)
 	return (ptr + 1);
 }
 
-void parse_flag(char *flag, int *flags)
+int parse_flag(char *flag, int *flags)
 {
 	int i;
 

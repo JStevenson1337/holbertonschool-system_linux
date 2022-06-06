@@ -56,14 +56,12 @@ typedef struct node_s
 	struct node_s *prev;
 } node_t;
 
-
-void parse_flag(char *flag, int *flags);
-
-int main(int argc, char **argv);
+node_t get_head(node_t *head)
 void listFiles(char* dirname);
 void parse_flags(int *flags, int *i);
 char *base_name(char *fullpath);
-void parse_flag(char *flag, int *flags);
+int parse_flag(char *flag, int *flags);
+int main(int argc, char **argv);
 
 /* error handling error.c*/
 /* error.c */
