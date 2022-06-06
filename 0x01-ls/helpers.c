@@ -1,49 +1,28 @@
-#include "hls.h"
+#include "header.h"
 
 /**
- * mystrcmp - compares two strings together
- * @s1: the destination string
- * @s2: the string part we are adding to dest
- * Return: integer positive if s1 is sooner alphabetically, negative if later
- */
-int _strcmp(char *s1, char *s2)
+ * approve_open_dir - confirms whether we want to open a dir (for -R)
+ * @dir: file node of dir
+ * @flags: flags
+ * Return: 1 if opening approved | 0 if reject
+ **/
+bool approve_open_dir(file_node_t *dir, ls_config_t *flags)
 {
+	char *d;
 
-	/* keep going through the letters while they are the same */
-	while (*s1 != '\0' && *s2 != '\0' && *s1 - *s2 == 0)
+	if (S_ISDIR(dir->info->st_mode) == false)
+		return (false);
+
+	if (dir->name[0] == '.')
 	{
-		s1++;
-		s2++;
+		if (IS_PARENT_DIR(dir->name) || IS_CWD(dir->name))
+			return (false);
+		if (flags->dot == false && flags->dot_alt == false)
+			return (false);
 	}
-	/* now return the difference */
-	return (int) (*s1 - *s2);
-}
+	d = dir->name + len(dir->name) - 1;
+	if (d - 2 >= dir->name && (IS_CWD(d) || IS_PARENT_DIR((d - 1))))
+		return (false);
 
-int _strncpy(char *s1, char *s2, int n)
-{
-	int i = 0;
-
-	while (i < n && s2[i] != '\0')
-	{
-		s1[i] = s2[i];
-		i++;
-	}
-	while (i < n)
-	{
-		s1[i] = '\0';
-		i++;
-	}
-	return (0);
-}
-
-
-int _strlen(char *s)
-{
-	int i = 0;
-
-	while (s[i] != '\0')
-	{
-		i++;
-	}
-	return (i);
+	return (true);
 }
