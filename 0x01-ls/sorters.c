@@ -36,17 +36,17 @@ file_node_t *sort_files_by_time(file_node_t *head)
  * @a: file node 1
  * @b: file node 2
  **/
-void swap_files(file_node_t *a, file_node_t *b)
-{
-	if (a->prev)
-		a->prev->next = b;
-	b->prev = a->prev;
-	a->next = b->next;
-	if (b->next)
-		b->next->prev = a;
-	b->next = a;
-	a->prev = b;
-}
+// void swap_files(file_node_t *a, file_node_t *b)
+// {
+// 	if (a->prev)
+// 		a->prev->next = b;
+// 	b->prev = a->prev;
+// 	a->next = b->next;
+// 	if (b->next)
+// 		b->next->prev = a;
+// 	b->next = a;
+// 	a->prev = b;
+// }
 
 /**
  * compare_files_by_time - compare file nodes by time of most recent mod

@@ -29,32 +29,23 @@ dir_node_t *sort_dir_list_by_size(dir_node_t *head)
 	return (head);
 }
 
+
 /**
- * compare_dirs_by_size - compare two dirs by size
+ * compare_dirs_by_size - compares two directory nodes by size
  * @a: directory node 1
  * @b: directory node 2
- * Return: 1 if a is smaller | 0 if b is larger
+ * Return: 1 if a > b | 0 if a < b
  **/
 int compare_dirs_by_size(dir_node_t *a, dir_node_t *b)
 {
-	struct stat info;
-
-	if (a->size == -1)
-	{
-		lstat(a->dir_name, &info);
-		a->size = info.st_size;
-	}
-	if (b->size == -1)
-	{
-		lstat(b->dir_name, &info);
-		b->size = info.st_size;
-	}
-
-	if (a->size == b->size)
-		return (which_goes_first(a->dir_name, b->dir_name) != a->dir_name);
-
-	return (a->size < b->size);
+	if (a->info->st_size > b->info->st_size)
+		return (1);
+	else if (a->info->st_size < b->info->st_size)
+		return (0);
+	else
+		return (compare_dirs_by_name(a, b));
 }
+
 
 /**
  * swap_dirs - swap position of two directory nodes
