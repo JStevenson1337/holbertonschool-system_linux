@@ -2,28 +2,16 @@
 #define HLS_HEADER
 
 #include <sys/types.h>
-
 #include <dirent.h>
-
 #include <stdio.h>
-
 #include <sys/stat.h>
 #include <unistd.h>
-
 #include <errno.h>
-
 #include <time.h>
-
 #include <stdbool.h>
-
 #include <pwd.h>
-
 #include <grp.h>
-
 #include <stdlib.h>
-
-
-
 /**
  * struct file_link_s - file linked list node
  * @name: file name

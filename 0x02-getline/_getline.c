@@ -70,7 +70,10 @@ char *find_line(getline_t *ptr)
 				return (NULL);
 			}
 			memcpy(tmp, line, bytes_copied);
-			memset(tmp + bytes_copied, '\0', line_size - bytes_copied);
+			memset(tmp + bytes_copied, 
+			//TODO rewrite memset and memcopy to use pointers
+
+			'\0', line_size - bytes_copied);
 			free(line), line = tmp;
 		}
 

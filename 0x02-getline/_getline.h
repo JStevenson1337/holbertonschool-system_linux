@@ -1,10 +1,5 @@
-<<<<<<< HEAD
 #ifndef _getline_h
 #define _getline_h
-=======
-#ifndef GETLINE_H
-#define GETLINE_H
->>>>>>> parent of 7ac1bf0 (revert)
 
 #include <stdio.h>
 #include <unistd.h>
@@ -29,13 +24,7 @@ typedef struct getline_r
 } getline_t;
 
 char *_getline(const int fd);
-<<<<<<< HEAD
-char *find_line(getline_t *ptr);
-
-#endif /* _getline_h */
-=======
 int get_fd_pos(char ***all_text_fd, int ***all_fds, char ***all_buff_fd, int *num_fds, int fd);
 
 
-#endif /* GETLINE_H */
->>>>>>> parent of 7ac1bf0 (revert)
+#endif /* _getline_h */
