@@ -5,66 +5,58 @@ Python script to change the memory value in the heap of a process
 Usage: python3 read_write_heap.py <pid> <search_string> <replace_string>
 """
 import sys
-import os
 import re
 
 
 def read_write_heap(pid, search_string, replace_string):
     """ Read and write the heap of a process """
-    # check if the process exists
-    if not os.path.exists("/proc/{}/mem".format(pid)):
-        error_handler("Process {} does not exist".format(pid))
+    # check if the pid is a number
+    if not pid.isdigit():
+        error_handler("The pid must be a number")
 
-    # check if the search string exists
+    # check if the pid exists
     try:
-        with open("/proc/{}/maps".format(pid), "r") as f:
-            maps = f.read()
-    except IOError as e:
-        error_handler("Error reading /proc/{}/maps: {}".format(pid, e))
+        with open("/proc/{}/maps".format(pid), "r") as maps:
+            pass
+    except FileNotFoundError:
+        error_handler("The pid does not exist")
 
-    # check if the search string exists
-    if search_string not in maps:
-        error_handler("Search string {} not found".format(search_string))
+    # open the maps file
+    with open("/proc/{}/maps".format(pid), "r") as maps_file:
+        # read the maps file
+        maps = maps_file.read()
 
-    # read the memory of the process
-    try:
-        with open("/proc/{}/mem".format(pid), "rb+") as f:
-            mem = f.read()
-    except IOError as e:
-        error_handler("Error reading /proc/{}/mem: {}".format(pid, e))
+    # get the heap address
+    heap_address = re.search(r"\[heap\](.*)", maps).group(1).split("-")[0]
 
-    # search and replace the string
-    mem = mem.replace(search_string.encode(), replace_string.encode())
+    # open the memory file
+    with open("/proc/{}/mem".format(pid), "r+b") as mem_file:
+        # read the memory file
+        mem = mem_file.read()
 
-    # write the memory of the process
-    try:
-        with open("/proc/{}/mem".format(pid), "wb") as f:
-            f.write(mem)
-    except IOError as e:
-        error_handler("Error writing /proc/{}/mem: {}".format(pid, e))
+        # get the index of the search string
+        index = mem.find(bytes(search_string, "ASCII"))
+
+        # check if the search string was found
+        if index == -1:
+            error_handler("The search string was not found")
+
+        # change the memory value
+        mem_file.seek(int(heap_address, 16) + index)
+        mem_file.write(bytes(replace_string, "ASCII"))
 
 
-def error_handler(msg):
-    """ Print error message and exit """
-    print(msg)
+def error_handler(error):
+    """ Print the error and exit """
+    print(error)
     sys.exit(1)
 
 
-def main():
-    """ Main function """
-    # check if the arguments are correct
+if __name__ == "__main__":
+    # check the arguments
     if len(sys.argv) != 4:
         error_handler(
             "Usage: python3 read_write_heap.py <pid> <search_string> <replace_string>")
 
-    # get the arguments
-    pid = sys.argv[1]
-    search_string = sys.argv[2]
-    replace_string = sys.argv[3]
-
-    # call the function
-    read_write_heap(pid, search_string, replace_string)
-
-
-if __name__ == "__main__":
-    main()
+    # read and write the heap
+    read_write_heap(sys.argv[1], sys.argv[2], sys.argv[3])
