@@ -4,64 +4,65 @@
 Python script to change the memory value in the heap of a process
 Usage: python3 read_write_heap.py <pid> <search_string> <replace_string>
 """
+
+from re import findall
 from sys import argv
-from os import sys
-import re
-from xml.sax import ErrorHandler
 
 
-def read_write_heap(pid, search_string, replace_string):
-    """ Read and write the heap of a process """
-    # check if the pid is a number
-    if not pid.isdigit():
-        ErrorHandler("The pid must be a number")
+def read_write_heap(pid, target, replacement):
+    """ finds and replaces target string in heap of a running process"""
 
-    # check if the pid exists
     try:
-        with open("/proc/{}/maps".format(pid), "r") as maps:
-            pass
-    except FileNotFoundError:
-        error_handler("The pid does not exist")
+        with open('/proc/{}/maps'.format(pid), 'r') as mmap_file:
+            mmap_char_map = mmap_file.read()
+            mmap_file.close()
+    except FileNotFoundError as e:
+        error_out('{} does not represent a running process.\n'.format(pid))
 
-    # open the maps file
-    with open("/proc/{}/maps".format(pid), "r") as maps_file:
-        # read the maps file
-        maps = maps_file.read()
+    pattern = r'\b([\da-zA-Z]+)-([\da-zA-Z]+).*?\[heap]'
+    # re.findall() returns a list of tuples of the captured groups
+    heap_ranges_from_mmap = findall(pattern, mmap_char_map)
+    with open('/proc/{}/mem'.format(pid), 'r+b', 0) as mem_file:
+        print('heap ranges: {}'.format(heap_ranges_from_mmap))
 
-    # get the heap address
-    heap_address = re.search(r"\[heap\](.*)", maps).group(1).split("-")[0]
-    print("Heap address: {}".format(heap_address))
+        for heap_range in heap_ranges_from_mmap:
+            start = int(heap_range[0], 16)
+            end = int(heap_range[1], 16)
+            mem_file.seek(start)
+            buffer = mem_file.read(end - start)
+            target_location = buffer.find(target)
 
-    # open the memory file
-    with open("/proc/{}/mem".format(pid), "rb+") as mem_file:
-        # read the memory file
-        mem = mem_file.read()
-
-        # search the string in the memory
-        search_string_address = mem.find(bytes(search_string, "utf-8"))
-        print("Search string address: {}".format(hex(search_string_address)))
-
-        # replace the string in the memory
-        mem_file.seek(search_string_address)
-        mem_file.write(bytes(replace_string, "utf-8"))
-
-
-def error_handler(error):
-    """ Print the error and exit """
-    print(error)
-    sys.exit(1)
+            if target_location != -1:
+                mem_file.seek(start + target_location)
+                print('Found {} at {}'.format(target, hex(start + target_location)))
+                difference = max(len(target) - len(replacement), 0)
+                print('Difference: {} in bytes'.format(difference))
+                mem_file.write(replacement + bytes(difference))
+                print('Replaced with {}'.format(replacement))
+                break
+        mem_file.close()
 
 
-if __name__ == "__main__":
-    # check the arguments
+def error_out(error_msg):
+    """ prints error message and exits with error code 1 """
+    print(error_msg)
+    exit(1)
+
+
+if __name__ == '__main__':
+
     if len(argv) != 4:
-        error_handler(
-            "Usage: python3 read_write_heap.py <pid> <search_string> <replace_string>")
+        error_out('Usage: {} pid target_str replacement_str\n'.format(argv[0]))
 
-    # get the arguments
-    pid = argv[1]
-    search_string = argv[2]
-    replace_string = argv[3]
+    try:
+        pid = int(argv[1])
+    except ValueError:
+        error_out('{}: first arg must be valid proccess id\n'.format(argv[0]))
 
-    # read and write the heap
-    read_write_heap(pid, search_string, replace_string)
+    target = bytes(argv[2], 'ascii')
+    replacement = bytes(argv[3], 'ascii')
+
+    # Let's do this!
+    read_write_heap(pid, target, replacement)
+    print('Successfully Updated Memory')
+    exit(0)
