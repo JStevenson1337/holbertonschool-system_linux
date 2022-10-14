@@ -34,7 +34,8 @@ def read_write_heap(pid, target, replacement):
 
             if target_location != -1:
                 mem_file.seek(start + target_location)
-                print('Found {} at {}'.format(target, hex(start + target_location)))
+                print('Found {} at {}'.format(target,
+                                              hex(start + target_location)))
                 difference = max(len(target) - len(replacement), 0)
                 print('Difference: {} in bytes'.format(difference))
                 mem_file.write(replacement + bytes(difference))
