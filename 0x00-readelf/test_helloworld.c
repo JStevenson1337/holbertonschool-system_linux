@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 #include <stdio.h>
 #include <stdlib.h>
 
@@ -26,5 +27,22 @@ int func(argc, **argv)
     {
       }
   }
+=======
+#include "elf.h"
+
+// #define *Buff[100];
+
+/**
+ *
+ *
+ *
+ *
+ **/
+int main()
+{
+	printf("Hello World!\n");
+	printf("Hello World123!\n");
+	return (0);
+>>>>>>> a759bd45a62fdc5f5afa8f2a456cd99a3cb3eb21
 }
 
