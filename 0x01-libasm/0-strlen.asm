@@ -1,44 +1,22 @@
 BITS 64
+	global asm_strlen
 
-section .data
+	section .text
 
-section .text
-	global _start
+asm_strlen: ; int asm_strlen(char *str)
+	push rbp ; save the base pointer
+	mov rbp, rsp ; set the base pointer to the stack pointer
+	mov rax, 0 ; set the return value to 0
+	jmp nullCheck ; jump to the loop check
 
-_start:
+mainLoop: ; loop body
+	inc rax ; increment the return value
+	inc rdi ; increment the string pointer
 
+nullCheck:
+	cmp byte [rdi], 0 ; check if the current character is null
+	jne mainLoop ; if not, jump to the loop body
 
-	mov rax, 1 ; move into rax the value 1
-	cmp rax, 0 ; compare rax with 0
-	jne .addOneByte ; if rax is not equal to 0, jump to .addOneByte
-	je .printNumBytes ; if rax is equal to 0, jump to .printNumBytes
-	mov rax, 0 ; move into rax the value 0
-	mov rdi, 1 ; move into rdi the value 1
-	mov rsi, .numBytes ; move into rsi the address of .numBytes
-	mov rdx, 2 ; move into rdx the value 2
-	syscall ; call the system call write
-	mov rax, 60 ; move into rax the value 60
-	mov rdi, 0 ; move into rdi the value 0
-
-	syscall ; call the system call exit
-
-.addOneByte: ; add 1 to the value of rax
-	add byte [rsi], 1 ; add 1 to the byte pointed by rsi
-	jmp .start ; jump to .start
-
-.printNumBytes: ; print the number of bytes
-	mov rax, 1 ; move into rax the value 1
-	mov rdi, 1 ; move into rdi the value 1
-	mov rsi, .numBytes ; move into rsi the address of .numBytes
-	mov rdx, 2 ; move into rdx the value 2
-	syscall ; call the system call write
-	mov rax, 60 ; move into rax the value 60
-	mov rdi, 0 ; move into rdi the value 0
-	syscall ; call the system call exit
-
-
-.numBytes: ; the number of bytes
-	[]
-
-
-
+	mov rsp, rbp ; set the stack pointer to the base pointer
+	pop rbp ; restore the base pointer
+	ret ; return
