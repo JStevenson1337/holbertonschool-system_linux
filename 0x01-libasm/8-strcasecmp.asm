@@ -38,8 +38,8 @@ _L1:
 
 _L2:
 	cmp al, dl
-	je equal
-	jl less
+	je _isIS
+	jl _lessThan
 	sub al, dl
 	jmp _End
 _isIS:
