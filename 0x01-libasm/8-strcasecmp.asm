@@ -15,7 +15,7 @@ while:
 	cmp al, 0x0
 	jne not_both_null
 	cmp dl, 0x0
-	je after
+	je _L2
 	not_both_null:
 	cmp al, 65
 	jl case_a_done
@@ -24,34 +24,34 @@ while:
 	add ax, 32
 	case_a_done:
 	cmp dl, 65
-	jl case_done
+	jl _L1
 	cmp dl, 90
-	jg case_done
+	jg _L1
 	add dx, 32
 
-case_done:
+_L1:
 	cmp al, dl
-	jne after
+	jne _L2
 	inc rdi
 	inc rsi
 	jmp while
 
-after:
+_L2:
 	cmp al, dl
 	je equal
 	jl less
 	sub al, dl
-	jmp end
-equal:
+	jmp _End
+_isIS:
 	mov rax, 0x0
-	jmp end
-less:
+	jmp _End
+_lessThan:
 	sub al, dl
 	neg al
 	imul eax, -1
-	jmp end
+	jmp _End
 
-end:
+_End:
 	pop rdx
 
 	mov rbp, rsp
