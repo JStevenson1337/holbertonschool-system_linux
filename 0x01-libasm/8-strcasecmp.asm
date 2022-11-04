@@ -10,12 +10,12 @@ asm_strcasecmp:
 while:
 	mov rax, rdi 				; rax = s1
 	mov rdx, rsi				; rdx = s2
-	movzx eax, BYTE [rax]		; rax = *s1
+	movzx eax, BYTE [rax]		
 	movzx edx, BYTE [rdx]
 	cmp al, 0x0
 	jne not_both_null
 	cmp dl, 0x0
-	je _L2
+	je after
 	not_both_null:
 	cmp al, 65
 	jl case_a_done
@@ -24,34 +24,34 @@ while:
 	add ax, 32
 	case_a_done:
 	cmp dl, 65
-	jl _L1
+	jl case_done
 	cmp dl, 90
-	jg _L1
+	jg case_done
 	add dx, 32
 
-_L1:
+case_done:
 	cmp al, dl
-	jne _L2
+	jne after
 	inc rdi
 	inc rsi
 	jmp while
 
-_L2:
+after:
 	cmp al, dl
-	je _isEqual
-	jl _isLess
+	je equal
+	jl less
 	sub al, dl
-	jmp _final
-_isEqual:
+	jmp end
+equal:
 	mov rax, 0x0
-	jmp _final
-_isLess:
+	jmp end
+less:
 	sub al, dl
 	neg al
 	imul eax, -1
-	jmp _final
+	jmp end
 
-_final:
+end:
 	pop rdx
 
 	mov rbp, rsp
