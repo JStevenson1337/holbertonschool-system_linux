@@ -10,7 +10,7 @@ asm_strcasecmp:
 while:
 	mov rax, rdi 				; rax = s1
 	mov rdx, rsi				; rdx = s2
-	movzx eax, BYTE [rax]		
+	movzx eax, BYTE [rax]
 	movzx edx, BYTE [rdx]
 	cmp al, 0x0
 	jne not_both_null
