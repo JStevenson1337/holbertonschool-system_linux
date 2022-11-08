@@ -7,11 +7,10 @@
  */
 int handle_signal(void)
 {
-	my_sig_t handler;
 
-
-	if (signal(SIGINT, handler) == SIGINT)
+	if (signal(SIGINT, current_handler) == SIGINT)
 		return (-1);
-	write(1, "Gotcha!  \n", );
-	return (0);
+	printf("Gotcha! [%d]", signal);
+  return (0);
 }
+
