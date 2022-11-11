@@ -29,22 +29,22 @@ Task_1_debug:
 Task_2:
 	$(CC) $(CFLAGS) $(Task2_files) -o 2-handle_sigaction
 Task_2_debug:
-	$(CC) $(DEBUGFLAGS)$(Task2_files) -o 2-handle_sigaction_debug
+	$(CC) $(DEBUGFLAGS) $(Task2_files) -o 2-handle_sigaction_debug
 
 Task_3:
 	$(CC) $(CFLAGS) $(Task3_files) -o 3-current_handler_sigaction
 Task_3_debug:
-	$(CC) $(DEBUGFLAGS) $(Task3_files)-o 3-current_handler_sigaction_debug
+	$(CC) $(DEBUGFLAGS) $(Task3_files) -o 3-current_handler_sigaction_debug
 
 Task_4:
 	$(CC) $(CFLAGS) $(Task4_files) -o 4-trace_signal_sender
 Task_4_debug:	
-	$(CC) $(DEBUGFLAGS )$(Task4_files) -o 4-trace_signal_sender_debug
+	$(CC) $(DEBUGFLAGS) $(Task4_files) -o 4-trace_signal_sender_debug
 
 Task_5:
 	$(CC) $(CFLAGS) $(Task5_files) -o 5-signal_describe
 Task_5_debug:
-	$(CC) $(DEBUGFLAGS) $(Task5_files)-o 5-signal_describe_debug
+	$(CC) $(DEBUGFLAGS) $(Task5_files) -o 5-signal_describe_debug
 
 Task_6:
 	$(CC) $(CFLAGS) $(Task6_files) -o 6-suspend
@@ -64,7 +64,7 @@ Task_8_debug:
 Task_10:
 	$(CC) $(CFLAGS) $(Task10_files) -o 10-pid_exist
 Task_10_debug:
-	$(CC) $(DEBUGFLAGS) $(Task10_files) -o 10-pid_exist
+	$(CC) $(DEBUGFLAGS) $(Task10_files) -o 10-pid_exist_debug
 
 
 
