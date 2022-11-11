@@ -24,6 +24,5 @@ int handle_sigaction(void)
 
 	memset(&handle, 0, sizeof(handle));
 	handle.sa_handler = signal_handler;
-	return(sigaction(SIGINT, &handle, NULL));
-
+	return (sigaction(SIGINT, &handle, NULL));
 }
