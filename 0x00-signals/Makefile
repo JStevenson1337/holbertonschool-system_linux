@@ -68,19 +68,15 @@ Task_10_debug:
 
 
 
-OBJ = 0-handle_signal.o 1-current_handler_signal.o 2-handle_sigaction.o 3-current_handler_sigaction.o 4-trace_signal_sender.o 5-signal_describe.o 6-suspend.o 7-wait_for_it.o 7-signal_send.o 8-wait_for_it.o 10-pid_exist.o
-
 all: Task_0 Task_1 Task_2 Task_3 Task_4 Task_5 Task_6 Task_7 Task_8 Task_10
 
-
-	@echo "********Done.*********"
+obj: $(HEADERS)
+	$(CC) -c $(HEADERS) $(CFLAGS) $(Task0_Files) $(Task1_files) $(Task2_files) $(Task3_files) $(Task4_files) $(Task5_files) $(Task6_files) $(Task7_files) $(Task8_files) $(Task10_files)
 
 debug: Task_0_debug Task_1_debug Task_2_debug Task_3_debug Task_4_debug Task_5_debug Task_6_debug Task_7_debug Task_8_debug Task_10_debug
 
-
-	@echo "********Done.*********"
-
-
+obj_debug: $(HEADERS)
+	$(CC) $(DDEBUG) -c $(HEADERS) $(DEBUGFLAGS) $(Task0_Files) $(Task1_files) $(Task2_files) $(Task3_files) $(Task4_files) $(Task5_files) $(Task6_files) $(Task7_files) $(Task8_files) $(Task10_files)
 betty:
 	@echo "Checking betty style..."
 	@$(BETTYCHECK) *.c
@@ -90,4 +86,4 @@ betty:
 
 
 clean:
-	rm -f 0-handle_signal 0-handle_signal_debug 1-current_handler_signal 1-current_handler_signal_debug 2-handle_sigaction 2-handle_sigaction_debug 3-current_handler_sigaction 3-current_handler_sigaction_debug 4-trace_signal_sender 4-trace_signal_sender_debug 5-signal_describe 5-signal_describe_debug 6-suspend 6-suspend_debug 7-wait_for_it 7-wait_for_it_debug 8-wait_for_it 8-wait_for_it_debug 10-pid_exist 10-pid_exist_debug
+	rm -f 0-handle_signal 0-handle_signal_debug 1-current_handler_signal 1-current_handler_signal_debug 2-handle_sigaction 2-handle_sigaction_debug 3-current_handler_sigaction 3-current_handler_sigaction_debug 4-trace_signal_sender 4-trace_signal_sender_debug 5-signal_describe 5-signal_describe_debug 6-suspend 6-suspend_debug 7-wait_for_it 7-wait_for_it_debug 8-wait_for_it 8-wait_for_it_debug 10-pid_exist 10-pid_exist_debug *.o
