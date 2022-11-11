@@ -1,22 +1,22 @@
-#include "signals.h"
 
+#include "signals.h"
 /**
- * print_hello - prints a message when a signal is received
- * @my_sig: the signal number
+ * print_hello - prints hello
+ * @num: the signal number
+ *
+ * Return: void
  */
-void print_hello(int my_sig)
+void print_hello(int num)
 {
-	printf("Gotcha! [%d]\n", my_sig);
+	(void) num;
+	puts("Hello :)");
 	fflush(stdout);
 }
-
 /**
- * handle_signal - sets a handler for the signal SIGINT
- * Return: 0 on success, -1 on error
+ * set_print_hello - set the handler for SIGINT to print_hello
+ * Return: void
  */
-int handle_signal(void)
+void set_print_hello(void)
 {
-	if (signal(SIGINT, print_hello) == SIG_ERR)
-		return (-1);
-	return (0);
+	signal(SIGINT, print_hello);
 }
