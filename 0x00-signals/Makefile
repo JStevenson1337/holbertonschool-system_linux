@@ -12,7 +12,7 @@ Task4_files = 4-main.c 4-trace_signal_sender.c
 Task5_files = 5-signal_describe.c
 Task6_files = 6-suspend.c
 Task7_files = 7-main.c
-Task8_files = 8-main.c
+Task8_files = 8-main.c.--=-===================================
 Task10_files = 10-main.c 10-pid_exist.c
 
 
@@ -59,7 +59,7 @@ Task_7_debug:
 Task_8:
 	$(CC) $(CFLAGS) $(Task8_files) -o 8-wait_for_it
 Task_8_debug:
-	$(CC) $(DEBUGFLAGS) $(Task8_files) -o 8-wait_for_it_debug
+	$(CC) $(DEBUGFLAGS) $(Task8_f0x00-signalsiles) -o 8-wait_for_it_debug
 
 Task_10:
 	$(CC) $(CFLAGS) $(Task10_files) -o 10-pid_exist
