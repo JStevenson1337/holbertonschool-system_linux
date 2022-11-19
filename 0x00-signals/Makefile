@@ -66,7 +66,8 @@ Task_10:
 Task_10_debug:
 	$(CC) $(DEBUGFLAGS) $(Task10_files) -o 10-pid_exist_debug
 
-
+Sig_Ex:
+	gcc -Wall -O2 ./explore_signals.c -o example
 
 all: Task_0 Task_1 Task_2 Task_3 Task_4 Task_5 Task_6 Task_7 Task_8 Task_10
 

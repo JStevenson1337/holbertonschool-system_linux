@@ -1,19 +1,15 @@
-########################################################################
-####################### Makefile Template ##############################
-########################################################################
 
-# Compiler settings - Can be customized.
+# Compiler settings
 CC = gcc
 CXXFLAGS = -std=c11 -Wall
 LDFLAGS = 
 
-# Makefile settings - Can be customized.
+# Makefile settings
 APPNAME = myapp
 EXT = .c
 SRCDIR = src
 OBJDIR = obj
 
-############## Do not change anything from here downwards! #############
 SRC = $(wildcard $(SRCDIR)/*$(EXT))
 OBJ = $(SRC:$(SRCDIR)/%$(EXT)=$(OBJDIR)/%.o)
 DEP = $(OBJ:$(OBJDIR)/%.o=%.d)
@@ -25,9 +21,7 @@ DEL = del
 EXE = .exe
 WDELOBJ = $(SRC:$(SRCDIR)/%$(EXT)=$(OBJDIR)\\%.o)
 
-########################################################################
-####################### Targets beginning here #########################
-########################################################################
+########### Targets beginning here ############
 
 all: $(APPNAME)
 
