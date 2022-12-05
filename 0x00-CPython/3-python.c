@@ -15,19 +15,19 @@ void print_python_float(PyObject *p);
  */
 void print_python_list(PyObject *p)
 {
-	int i = 0, tamano = 0;
+	int i = 0, size = 0;
 
 	if (PyList_Check(p))
 	{
 		printf("[*] Python list info\n");
 		fflush(stdout);
-		tamano = (int)(((PyVarObject *)(p))->ob_size);
+		size = (int)(((PyVarObject *)(p))->ob_size);
 
-		printf("[*] Size of the Python List = %d\n", tamano);
+		printf("[*] Size of the Python List = %d\n", size);
 		fflush(stdout);
 		printf("[*] Allocated = %d\n", (int)(((PyListObject *)(p))->allocated));
 		fflush(stdout);
-		for (i = 0; i < tamano; i++)
+		for (i = 0; i < size; i++)
 		{
 			printf("Element %d: %s\n", i, DATATYPE);
 			fflush(stdout);
@@ -50,7 +50,7 @@ void print_python_list(PyObject *p)
  */
 void print_python_bytes(PyObject *p)
 {
-	int tamano = 0, printed = 0, i = 0;
+	int size = 0, printed = 0, i = 0;
 	char *buffer, copy_arr[100];
 
 	printf("[.] bytes object info\n");
@@ -58,18 +58,18 @@ void print_python_bytes(PyObject *p)
 	if (PyBytes_Check(p))
 	{
 		buffer = ((PyBytesObject *)(p))->ob_sval;
-		tamano = (int)PyBytes_Size(p);
-		if (tamano >= 10)
+		size = (int)PyBytes_Size(p);
+		if (size >= 10)
 			printed = 10;
 		else
-			printed = tamano + 1;
+			printed = size + 1;
 		strcpy(copy_arr, buffer);
-		for (i = 0; i < tamano; i++)
+		for (i = 0; i < size; i++)
 		{
 			if (copy_arr[i] < 0)
 				copy_arr[i] = '?';
 		}
-		printf("  size: %d\n", tamano);
+		printf("  size: %d\n", size);
 		fflush(stdout);
 		printf("  trying string: %s\n", copy_arr);
 		fflush(stdout);
