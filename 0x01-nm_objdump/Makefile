@@ -1,63 +1,22 @@
+# -*- MakeFile -*-
 
-# Compiler settings
+NAME0 = hnm
+NAME1 = hobjdump 
+
 CC = gcc
-CXXFLAGS = -Wall -Werror -Wextra -pedantic
-LDFLAGS = 
-
-# Makefile settings
-APPNAME = hnm
-EXT = .c
+CFLAGS = -Wall -Werror -Wextra -pedantic -g
 SRCDIR = src
-OBJDIR = obj
+COMMON_DIR = hreadelf
 
-SRC = $(wildcard $(SRCDIR)/*$(EXT))
-OBJ = $(SRC:$(SRCDIR)/%$(EXT)=$(OBJDIR)/%.o)
-DEP = $(OBJ:$(OBJDIR)/%.o=%.d)
-# UNIX-based OS variables & settings
-RM = rm
-DELOBJ = $(OBJ)
-# Windows OS variables & settings
-DEL = del
-EXE = .exe
-WDELOBJ = $(SRC:$(SRCDIR)/%$(EXT)=$(OBJDIR)\\%.o)
+TASK0 = symbolnames
+TASK1 = objdump
+COMMON = common_tools
+COMMON_HEADER = print_header
+OBJ0 += $(patsubst %.c, %.o, $(wildcard $(SRCDIR)/$(TASK0)/*.c))
+OBJ1 += $(patsubst %.c, %.o, $(SRCDIR)/$(TASK1)/0-main.c)
 
-########### Targets beginning here ############
+$(NAME0): $(OBJ0)
+	$(CC) $(OBJ0) -o $(NAME0)
 
-all: $(APPNAME)
-
-# Builds the app
-$(APPNAME): $(OBJ)
-	$(CC) $(CXXFLAGS) -o $@ $^ $(LDFLAGS)
-
-# Creates the dependecy rules
-%.d: $(SRCDIR)/%$(EXT)
-	@$(CPP) $(CFLAGS) $< -MM -MT $(@:%.d=$(OBJDIR)/%.o) >$@
-
-# Includes all .h files
--include $(DEP)
-
-# Building rule for .o files and its .c/.cpp in combination with all .h
-$(OBJDIR)/%.o: $(SRCDIR)/%$(EXT)
-	$(CC) $(CXXFLAGS) -o $@ -c $<
-
-################### Cleaning rules for Unix-based OS ###################
-# Cleans complete project
-.PHONY: clean
-clean:
-	$(RM) $(DELOBJ) $(DEP) $(APPNAME)
-
-# Cleans only all files with the extension .d
-.PHONY: cleandep
-cleandep:
-	$(RM) $(DEP)
-
-#################### Cleaning rules for Windows OS #####################
-# Cleans complete project
-.PHONY: cleanw
-cleanw:
-	$(DEL) $(WDELOBJ) $(DEP) $(APPNAME)$(EXE)
-
-# Cleans only all files with the extension .d
-.PHONY: cleandepw
-cleandepw:
-	$(DEL) $(DEP)
+$(NAME1): $(OBJ1)
+	$(CC) $(OBJ1) -o $(NAME1)
