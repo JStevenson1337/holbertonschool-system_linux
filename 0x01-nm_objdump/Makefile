@@ -1,11 +1,11 @@
 
 # Compiler settings
 CC = gcc
-CXXFLAGS = -std=c11 -Wall
+CXXFLAGS = -Wall -Werror -Wextra -pedantic
 LDFLAGS = 
 
 # Makefile settings
-APPNAME = myapp
+APPNAME = hnm
 EXT = .c
 SRCDIR = src
 OBJDIR = obj
