@@ -1,8 +1,8 @@
-#define "../inc/hearder.h"
+#include "../inc/header.h"
 
 
 
-int main(int arg, char **argv)
+int main(int argc, char **argv)
 {
-    // TODO: All the things.
+	// TODO: All the things.
 }
