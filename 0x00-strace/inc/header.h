@@ -5,14 +5,16 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <unistd.h>
+#include <sys/ptrace.h>
 
 
-typedef struct path_s
-{
-	str string;
-	int fd;
+#include "syscall.h"
 
-}path_t;
+
+
+
+
 
 #endif /* __HEADER_H__ */
 

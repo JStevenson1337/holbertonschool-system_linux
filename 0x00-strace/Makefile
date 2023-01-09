@@ -11,6 +11,12 @@ Example00 = strace_0
 
 ex_0.c -o ex_0
 
+strace_0
 
+strace_1
+
+strace_2
+
+strace_3
 
 
