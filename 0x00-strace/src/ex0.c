@@ -29,7 +29,7 @@ void insert(int x)
 }
 
 void copy(node_t *head, int arr[CURRENT_ARG], int n)
-{
+{	
 	node_t *temp = malloc(sizeof(node_t));
 	temp -> data = arr[0];
 	temp -> head = NULL;
