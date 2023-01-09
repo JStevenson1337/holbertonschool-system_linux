@@ -13,3 +13,14 @@
 0x02-getline/.vscode/targets.log
 0x02-getline/.vscode/targets.log
 0x02-getline/_getline.c.old
+0x00-CPython/libPython.so
+0x00-signals/0-handle_signal_debug
+0x00-signals/1-current_handler_signal_debug
+0x00-signals/2-handle_sigaction_debug
+0x00-signals/3-current_handler_sigaction_debug
+0x00-signals/4-trace_signal_sender_debug
+0x00-signals/5-signal_describe_debug
+0x00-signals/6-suspend_debug
+0x00-signals/7-wait_for_it_debug
+0x01-nm_objdump/.dccache
+0x01-nm_objdump/.dccache
