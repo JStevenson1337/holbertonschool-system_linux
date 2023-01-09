@@ -3,7 +3,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <unistd.h>
-extern **environ;
+extern char **environ;
 /**
  * main - Entry Point
  * argc: argument count
@@ -15,19 +15,19 @@ extern **environ;
 */
 int main(int argc, char *argv[])
 {
-    int i = 0;
+	int i, j  = 0;
 
-    for (i = 0; i < argc; i++)
-    {
-        printf("%s\n", argv[i]);
-    }
+	for (i = 0; i < argc; i++)
+	{
+		printf("%s\n", argv[i]);
+	}
 
-    while (environ[i] != NULL)
-    {
-        printf("%i\n", environ[i]);
-        i++;
-    }
-    
+	while (environ[j] != NULL)
+	{
+		printf("%s\n", environ[j]);
+		j++;
+	}
+	
 
 	return 0;
 }
