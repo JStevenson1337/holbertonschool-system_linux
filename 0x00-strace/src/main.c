@@ -1,7 +1,4 @@
 #include "../inc/header.h"
-#include <sys/ptrace.h>
-
-
 /**
  * main - Entry Point
  * argc: argument count
@@ -14,18 +11,18 @@ int main(int argc, char *argv[], char **environ)
 	long orig_eax;
 	int mainThread = 1;
 
-	while (mainThread) 
+	while (mainThread)
 	{
-	
-	
+		pid = fork();
+		printf("%d\t inside while\n", pid);
+
 		if (pid == 0)
 		{
-			/* TODO: Inside Child Process */
-			pid_t cPid = pid;
+			printf("%d\t inside Child Condition\n", pid);
 
-			ptrace(PTRACE_TRACEME, cPid, NULL, NULL);
+			ptrace(PTRACE_TRACEME, pid, NULL, NULL);
 
-			execve(argv[1],&argv[1],environ);
+			execve(argv[1],&argv[1], NULL);
 			/* Execve Faild */
 			printf(">>> Error = %i\n", errno);
 			return (EXIT_FAILURE);
@@ -33,10 +30,13 @@ int main(int argc, char *argv[], char **environ)
 
 		if (pid > 0)
 		{
+			
+
 			// int wait(NULL);
 			// orig_eax = ptrace(PTRACE_GETREGS, )
 			/* TODO: Inside Parent Process */
-			pid_t pPid = pid;
+			// pid_t pPid = pid;
+			printf("%d\t inside Parent Condition\n", pid);
 		}
 		else
 		{
@@ -50,16 +50,8 @@ int main(int argc, char *argv[], char **environ)
 			printf("Error -> %i\n", errno);
 			return(EXIT_FAILURE);
 		}
-		/* fork */
 
-		/* TODO: if 0 in child; if greater in parent; else fork failed */
-
-
-		// execve(
-		// 	argv[1],
-		// 	&argv[1],
-		// 	environ
-		//);
+		mainThread--;
 	}
 
 
