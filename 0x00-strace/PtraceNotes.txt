@@ -1,0 +1,30 @@
+PTRACE_SYSCALL, PTRACE_SINGLESTEP
+              Restart the stopped tracee as for PTRACE_CONT, but arrange for the tracee to be stopped
+              at the next entry to or exit from a system call, or after execution  of  a  single  in‐
+              struction, respectively.  (The tracee will also, as usual, be stopped upon receipt of a
+              signal.)  From the tracer's perspective, the tracee will appear to have been stopped by
+              receipt  of a SIGTRAP.  So, for PTRACE_SYSCALL, for example, the idea is to inspect the
+              arguments to the system call at the first stop, then do another PTRACE_SYSCALL and  in‐
+              spect  the  return  value  of the system call at the second stop.  The data argument is
+              treated as for PTRACE_CONT.  (addr is ignored.)
+
+
+ PTRACE_SYSCALL, PTRACE_SINGLESTEP
+              Restart the stopped tracee as for PTRACE_CONT, but arrange for the tracee to be stopped
+              at the next entry to or exit from a system call, or after execution  of  a  single  in‐
+              struction, respectively.  (The tracee will also, as usual, be stopped upon receipt of a
+              signal.)  From the tracer's perspective, the tracee will appear to have been stopped by
+              receipt  of a SIGTRAP.  So, for PTRACE_SYSCALL, for example, the idea is to inspect the
+              arguments to the system call at the first stop, then do another PTRACE_SYSCALL and  in‐
+              spect  the  return  value  of the system call at the second stop.  The data argument is
+              treated as for PTRACE_CONT.  (addr is ignored.)
+
+PTRACE_TRACEME
+              Indicate that this process is to be traced by its parent.  A process probably shouldn't
+              make  this request if its parent isn't expecting to trace it.  (pid, addr, and data are
+              ignored.)
+
+              The PTRACE_TRACEME request is used only by the tracee; the remaining requests are  used
+              only  by  the  tracer.   In  the following requests, pid specifies the thread ID of the
+              tracee to be acted on.  For requests other than PTRACE_ATTACH, PTRACE_SEIZE, PTRACE_IN‐
+              TERRUPT, and PTRACE_KILL, the tracee must be stopped.

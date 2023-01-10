@@ -9,9 +9,6 @@
 #include <sys/ptrace.h>
 
 
-#include "syscall.h"
-
-
 
 
 
