@@ -6,10 +6,7 @@
  * main - Entry Point
  * argc: argument count
  * argv: argument vector
- *
- * ONLY parameter to be passed in 
- * fully qualified path of binary file
- *      ie "./ex0 /usr/bin/ls"
+ * environ: environment variables
 */
 int main(int argc, char *argv[], char **environ)
 {
