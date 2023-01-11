@@ -8,65 +8,52 @@
  * environ: environment variables
  */
 int main(int argc, char *argv[], char **environ) {
-	pid_t pid;
-	syscall_t sysInfo;
-	int mainThread = 1;
-	int stat_loc;
+  pid_t pid;
+  syscall_t sysInfo;
+  int mainThread = 1;
+  int stat_loc, end_loc = 1;
+  struct user_regs_struct reg;
 
+  pid = fork();
 
+  if (pid == -1) {
+    printf("errno %i\n", errno);
+    return (EXIT_FAILURE);
+  }
+  if (pid == 0) {
+    ptrace(PTRACE_TRACEME, 0, 0, 0);
+    /* Execute the process */
+    execve(argv[1], &argv[1], environ);
 
+  } else if (pid > 0) {
+    wait(&stat_loc);
 
-	while (mainThread)
-	{
-		pid = fork();
+    while ((stat_loc >> 8) == SIGTRAP && (stat_loc & 0xFF) == stat_loc) {
+      if (!sysInfo.nr) {
+        /* Stopped after the syscall, get register data here */
+        /* Get register values */
+        ptrace(PTRACE_GETREGS, pid, NULL, &reg);
 
-		if (pid == -1)
-		{
-			printf("errno %i\n", errno);
-			return (EXIT_FAILURE);
-		}
-		if ( pid == 0)
-		{
-			ptrace(PTRACE_TRACEME, 0, 0, 0);
+        /* Syscall number in orig_rax */
+        sysInfo.nr
 
-			/* Execute the process */
-			argv[argc] = 0;
+            /* Print syscall number*/
+            printf("%lu\n", sysInfo.nr);
+        sysInfo.nb_params = 1;
 
-			execve(argv[1], &argv[1], NULL);
-			/*TODO: The success of execve will cause a
-			SIGTRAP to be sent to this child process. */
-			
-			
+        /* For parts 1-8...
+         * You'll use the syscall number to find data in syscalls_64_g array
+         */
+      } else {
+        /* Stopped during the syscall, get data on next interation */
+        &sysInfo.nr = 0;
+      }
 
-		}
-		/* In parent */
+      ptrace(PTRACE_SYSCALL, pid, NULL, NULL);
+      wait(&status);
+    }
+  } else {
+    /* Fork failed, EXIT_FAILURE here */
+  }
 
-		/* Wait for execve to finish*/
-
-		pid_t wait(int *stat_loc);
-		/* Start to trace system calls */
-
-		ptrace(PTRACE_SYSCALL, pid, 0, 0);
-		/* TODO: Wait until the ennty to a sys call */
-		sysInfo[0] = {nr};
-		struct user_regs_struct u_in;
-		/* TODO: Fill Struct */
-
-		ptrace(PTRACE_GETREGS, pid, 0, &u_in);
-		
-
-		syscall = u_in.orig_eax;
-		/* TODO: Restart Child if stopped */
-		
-		if (syscall == __NR_open)
-		{
-			printf("%s", syscall_names[syscall-1]);
- 			printf("%08lx ", u_in.ebx);
-			printf("%08lx ", u_in.ecx);
-			printf("%08lx\n ", u_in.edx);
-		}
-		mainThread--;
-	}
-	
-	return 0;
-}
+  return (EXIT_SUCCESS);
