@@ -2,24 +2,54 @@
 
 CC = gcc
 CFLAGS = -Wall -Werror -Wextra -pedantic
-CFDBUG = -g -DDEBUG
-SRC = src/
+CFDBUG = -g3 -DDEBUG
+
+SRC_DIR = src/
+OBJ_DIR = obj/
+INC_DIR = inc/
+
 STRACE_A = 0-main.c
 STRACE_B = 1-main.c
 STRACE_C = 2-main.c
 STRACE_D = 3-main.c
 RM = rm -rf
 
-ALL:
-	$(strace_0) $(strace_1) $(strace_2) $(strace_3)
-strace_0: $(SRC)$(STRACE_A)
+HEADERS = $(INC_DIR)*.h
+SOURCES = $(SRC_DIR)*.c
+OBJECTS = $(OBJ_DIR)*.o
+
+
+betty:
+	@echo "Checking betty style..."
+	@$(BETTYCHECK) *.c
+	@echo "Done."
+
+all: 
+	strace_0 strace_1 strace_2 strace_3
+DEBUGALL: strace_0_debug strace_1_debug strace_2_debug strace_3_debug
+OBJS: $(HEADERS)
+	$(CC) -c $(ALL)
+DOBJS:
+
+$(SRC_DIR)$(SOURCES) $(INC_DIR)$(HEADERS)
+
+strace_0: $(SRC_DIR)$(STRACE_A)
 	$(CC) $(CFLAGS) $^ -o $@
-strace_1: $(STRACE_B)
+strace_1: $(SRC_DIR)$(STRACE_B)
 	$(CC) $(CFLAGS) $^ -o $@
-strace_2: $(STRACE_C)
+strace_2: $(SRC_DIR)$(STRACE_C)
 	$(CC) $(CFLAGS) $^ -o $@
-strace_3: $(STRACE_D)
+strace_3: $(SRC_DIR)$(STRACE_D)
 	$(CC) $(CFLAGS) $^ -o $@
+
+strace_0_debug: $(SRC_DIR)$(STRACE_A)
+	$(CC) $(CFLAGS) $(CFDBUG) $^ -o $@
+strace_1_debug: $(SRC_DIR)$(STRACE_B)
+	$(CC) $(CFLAGS) $(CFDBUG) $^ -o $@
+strace_2_debug: $(SRC_DIR)$(STRACE_C)
+	$(CC) $(CFLAGS) $^ -o $@
+strace_3_debug: $(SRC_DIR)$(STRACE_D)
+	$(CC) $(CFLAGS) $(CFDBUG) $^ -o $@
 clean:
 	$(RM) *~ $(STRACE_A) $(STRACE_B) $(STRACE_C) $(STRACE_D)
 .PHONY: clean strace_0 strace_1 strace_2 strace_3
