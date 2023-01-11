@@ -36,7 +36,7 @@ int main(int argc, char *argv[], char **environ)
 		{
 			ptrace(PT_SYSCALL, pid, NULL, NULL);
 			wait(&stat_loc);
-			// printf("59\n");
+			/* printf("59\n"); */
 			ptrace(PT_GETREGS, pid, NULL, &regs);
 			if (showCall)
 				printf("%lu\n", (size_t)regs.orig_rax);
