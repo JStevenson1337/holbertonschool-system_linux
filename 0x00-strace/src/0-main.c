@@ -10,8 +10,7 @@
 int main(int argc, char *argv[], char **environ)
 {
 	pid_t pid;
-	int stat_loc, in_syscall = 0;
-	unsigned long syscall_nb;
+	int stat_loc, showCall;
 	struct user_regs_struct regs;
 
 	pid = fork();
@@ -28,33 +27,23 @@ int main(int argc, char *argv[], char **environ)
 	}
 	if (pid == 0)
 	{
-		ptrace(PTRACE_TRACEME, 0, 0, 0);
-		execve(argv[1], &argv[1], environ);
+		printf("59\n");
+		ptrace(PTRACE_TRACEME, pid, NULL, NULL);
+		execve(argv[1], argv + 1, environ);
 	}
-	else if (pid > 0)
+	else
 	{
-		wait(&stat_loc);
-
-		while ((stat_loc >> 8) == SIGTRAP && (stat_loc & 0xFF) == stat_loc)
+		for (stat_loc = 1, showCall = 0; !WIFEXITED(stat_loc); showCall ^= 1)
 		{
-			if (!in_syscall)
-			{
-
-				ptrace(PTRACE_GETREGS, pid, NULL, &regs);
-
-				syscall_nb = (unsigned long)regs.orig_rax;
-
-				printf("%lu\n", syscall_nb);
-				in_syscall = 1;
-			}
-			else
-			{
-				in_syscall = 0;
-			}
-			ptrace(PTRACE_SYSCALL, pid, NULL, &regs);
+			ptrace(PT_SYSCALL, pid, NULL, NULL);
 			wait(&stat_loc);
-			fflush(stdout);
-		}	
+			ptrace(PT_GETREGS, pid, NULL, &regs);
+			if (showCall)
+				printf("%lu\n", (size_t)regs.orig_rax);
+		}
 	}
 	return (EXIT_SUCCESS);
+
 }
+	
+
