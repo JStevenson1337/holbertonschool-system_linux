@@ -1,22 +1,24 @@
 #**~~ MAKEFILE ~~**#
 
-CC = gcc 
-DEBUG = $(FLAGS) -g -DDEBUG
-FLAGS = -Wall -Wextra -Werror -pedantic  
-HEAD = header.h
+CC = gcc
+CFLAGS = -Wall -Werror -Wextra -pedantic
+SRC = src/
+STRACE_A = 0-main.c
+STRACE_B = 1-main.c
+STRACE_C = 2-main.c
+STRACE_D = 3-main.c
+RM = rm -rf
 
-
-
-Example00 = strace_0 
-
-ex_0.c -o ex_0
-
-strace_0
-
-strace_1
-
-strace_2
-
-strace_3
-
-
+ALL:
+	$(STRACE_A) $(STRACE_B) $(STRACE_C) $(STRACE_D)
+strace_0: $(SRC)$(STRACE_A)
+	$(CC) $(CFLAGS) $^ -o $@
+strace_1: $(STRACE_B)
+	$(CC) $(CFLAGS) $^ -o $@
+strace_2: $(STRACE_C)
+	$(CC) $(CFLAGS) $^ -o $@
+strace_3: $(STRACE_D)
+	$(CC) $(CFLAGS) $^ -o $@
+clean:
+	$(RM) *~ $(STRACE_A) $(STRACE_B) $(STRACE_C) $(STRACE_D)
+.PHONY: clean strace_0 strace_1 strace_2 strace_3
