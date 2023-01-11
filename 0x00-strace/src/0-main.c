@@ -1,6 +1,5 @@
 #include "../inc/header.h"
 #include "../inc/syscalls.h"
-#include <stdlib.h>
 /**
  * main - Entry Point
  * argc: argument count
@@ -27,7 +26,7 @@ int main(int argc, char *argv[], char **environ)
 	}
 	if (pid == 0)
 	{
-		printf("59\n");
+		
 		ptrace(PTRACE_TRACEME, pid, NULL, NULL);
 		execve(argv[1], argv + 1, environ);
 	}
@@ -37,6 +36,7 @@ int main(int argc, char *argv[], char **environ)
 		{
 			ptrace(PT_SYSCALL, pid, NULL, NULL);
 			wait(&stat_loc);
+			printf("59\n");
 			ptrace(PT_GETREGS, pid, NULL, &regs);
 			if (showCall)
 				printf("%lu\n", (size_t)regs.orig_rax);
