@@ -2,7 +2,7 @@
 
 CC = gcc
 CFLAGS = -Wall -Werror -Wextra -pedantic
-# CFDBUG = -g3 -DDEBUG
+CFDBUG = -g3 -DDEBUG
 
 SRC_DIR = src/
 # OBJ_DIR = obj/
