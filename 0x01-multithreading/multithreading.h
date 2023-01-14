@@ -1,6 +1,17 @@
 #include <stddef.h>
 #include <stdint.h>
 
+/* My headers */
+#include <stdio.h>
+#include <stdlib.h>
+#include <pthread.h>
+#include <errno.h>
+#include <unistd.h>
+
+/* My Globals */
+
+
+/* Premade */
 /**
  * struct pixel_s - RGB pixel
  *
@@ -62,3 +73,6 @@ typedef struct blur_portion_s
     size_t h;
     kernel_t const *kernel;
 } blur_portion_t;
+
+/* Prototypes */
+void *thread_entry(void *arg);
