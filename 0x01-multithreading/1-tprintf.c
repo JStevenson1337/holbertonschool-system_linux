@@ -15,6 +15,4 @@ int tprintf(char const *format, ...)
 		return (0);
 	}
 	pthread_exit(&format);
-	
-
 }
