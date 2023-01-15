@@ -4,6 +4,7 @@
   * thread_entry - entry point for a new thread
   *
   * @arg: pointer to the address of a string
+  * Return: pointer
   */
 void *thread_entry(void *arg)
 {
@@ -13,6 +14,6 @@ void *thread_entry(void *arg)
 	}
 
 	printf("%s\n", (char *)arg);
-	pthread_exit(&arg);
+	pthread_exit(NULL);
 }
 
