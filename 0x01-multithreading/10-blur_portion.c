@@ -1,5 +1,44 @@
 #include "multithreading.h"
-#include <pthread.h>
+#include <stddef.h>
+
+img_t *iMageMap(blur_portion_t const *portion, size_t *surfaceArea, pixel_t *resolution[])
+{
+	size_t *width, *height;
+
+	width = (size_t *)(portion->w);
+	height = (size_t *)(portion->h);
+	*surfaceArea = *width * *height;
+
+
+
+
+
+	
+
+
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 /**
  * blur_portion - apply gaussian blur to an image
  *
@@ -8,21 +47,12 @@
  */
 void blur_portion(blur_portion_t const *portion)
 {
-	/* TODO: pthread_t tid; */
-	/* TODO: create atributes */
-	/* TODO: init  */
-	/* TODO:pthread create id &attr function caller,  address of img?*/
-
-
-	/* TODO:join */
-
-
-	if (!portion)
+	if (!portion || !portion->img || !portion->kernel)
 	{
-		pthread_exit(NULL);
+		printf("Error %d\n", errno);
+		pthread_exit(0);
 	}
-	pthread_attr_init((pthread_attr_t *)portion);
 
-
+	
 
 }
