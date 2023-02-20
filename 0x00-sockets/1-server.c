@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <errno.h>
+#include <unistd.h>
 #include <sys/types.h>
 #include <sys/socket.h>
 #include <netinet/in.h>
@@ -41,13 +42,12 @@ int main(void)
 			printf("Error: Unable to listen on %i - %s\n", PORT, strerror(errno));
 			return (-1);
 		}
-		socket_acccept = accept4(socket_fd, (struct sockaddr *)&server_t, sizeof(server_t, EFAULT));
-		if (!socket_acccept)
+		socket_accept = accept(socket_fd, (struct sockaddr *)&server_t, NULL);
+		if (!socket_accept)
 		{
 			printf("Error: Unable to accept socket on %i - %s\n", PORT, strerror(errno));
 			return (-1);
 		}
-		
 		close(socket_accept);
 	}
 	return (0);
