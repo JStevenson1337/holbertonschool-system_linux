@@ -40,6 +40,7 @@ int main(void)
 	while (1)
 	{
 		int listener = listen(socket_fd, BACKLOG);
+
 		if (listener < 0)
 		{
 			printf("Error: unable to listen on %i, error %i", PORT, errno);
