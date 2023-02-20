@@ -1,35 +1,55 @@
-#include <asm-generic/socket.h>
 #include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <errno.h>
+#include <unistd.h>
 #include <sys/types.h>
 #include <sys/socket.h>
-#include <errno.h>
-#include <sys/wait.h>
+#include <netinet/in.h>
+#include <arpa/inet.h>
+
 #define PORT 12345
+#define SIZE 1024
+#define BACKLOG 10
 
-
-
-
-
-
-int main()
+/**
+  * main - program entry point
+  *
+  * Return: 0 on success and 1 or -1 on failure
+  */
+int main(void)
 {
-	int net_socket, listen_server;
+	int socket_acccept;
 
+	int socket_fd = socket(
+		AF_INET,
+		SOCK_STREAM,
+		0
+	);
+	struct sockaddr_in server_address;
 
-	net_socket = socket(AF_INET, SOCK_STREAM, SO_KEEPALIVE);
+	server_address.sin_family = AF_INET;
+	server_address.sin_port = htons(PORT);
+	server_address.sin_addr.s_addr = htonl(INADDR_LOOPBACK);
 
+	bind(
+		socket_fd,
+		(struct sockaddr *)&server_address,
+		sizeof(server_address)
+	);
+	int listener = listen(
+		socket_fd,
+		BACKLOG
+	);
+	if (listener < 0)
+	{
+		printf("Error: unable to listen on port %i, error %i", PORT, errno);
+		return (-1);
+	}
 	while (1)
 	{
-		listen_server = listen(net_socket, 99);
-		if (listen_server == -1)
-		{
-			printf("%c", errno);
-			return (-1);
-
-		}
-
-
+		socket_acccept = accept(socket_fd, NULL, NULL);
+		close(socket_acccept);
 	}
 	return (0);
-
 }
