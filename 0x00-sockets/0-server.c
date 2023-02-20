@@ -37,18 +37,16 @@ int main(void)
 		(struct sockaddr *)&server_address,
 		sizeof(server_address)
 	);
-	int listener = listen(
-		socket_fd,
-		BACKLOG
-	);
-	if (listener < 0)
-	{
-		printf("Error: unable to listen on port %i, error %i", PORT, errno);
-		return (-1);
-	}
 	while (1)
 	{
+		int listener = listen(socket_fd,BACKLOG);
+		if (listener < 0)
+		{
+			printf("Error: unable to listen on %i, error %i", PORT, errno);
+			return (-1);
+		}
 		socket_acccept = accept(socket_fd, NULL, NULL);
+
 		close(socket_acccept);
 	}
 	return (0);
