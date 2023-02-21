@@ -26,7 +26,7 @@ int main(void)
 
 	if (server_socket < 0)
 	{
-		perror("socket error: %s", strerror(errno));
+		perror("socket");
 	}
 	memset(&server_getaddrinfo, 0, sizeof(server_getaddrinfo));
 	server_getaddrinfo.sin_family = AF_INET;
@@ -36,11 +36,11 @@ int main(void)
 		(struct sockaddr *)&server_getaddrinfo,
 		sizeof(server_getaddrinfo)) < 0)
 	{
-		perror("bind error: %s", strerror(errno));
+		perror("bind");
 	}
 	if (listen(server_socket, BACKLOG) < 0)
 	{
-		perror("listen error: %s", strerror(errno));
+		perror("listen");
 		return (-1);
 	}
 	for (;;)
@@ -51,7 +51,7 @@ int main(void)
 		&client_length);
 		if (client_socket < 0)
 		{
-			perror("accept error: %s", strerror(errno));
+			perror("accept");
 			return (-1);
 		}
 		printf("Client IP address: %s\n", inet_ntoa(client_getaddrinfo.sin_addr));
