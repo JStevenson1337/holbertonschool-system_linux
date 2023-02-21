@@ -22,51 +22,38 @@ int main(void)
 	struct sockaddr_in client_getaddrinfo;
 	unsigned int client_length;
 
-	if ((server_socket = socket(AF_INET, SOCK_STREAM, 0)) < 0)
-	{
-		errno = EINVAL;
-		printf("socket error on %d\n", server_socket);
-		if (errno != EINPROGRESS)
-			printf("error creating socket: %s\n", strerror(errno));
-	}
+	server_socket = socket(AF_INET, SOCK_STREAM, 0);
 
+	if (server_socket < 0)
+	{
+		perror("socket error: %s", strerror(errno));
+	}
 	memset(&server_getaddrinfo, 0, sizeof(server_getaddrinfo));
 	server_getaddrinfo.sin_family = AF_INET;
 	server_getaddrinfo.sin_addr.s_addr = htonl(INADDR_ANY);
 	server_getaddrinfo.sin_port = htons(PORT);
-
-	if (bind(server_socket, (struct sockaddr *)&server_getaddrinfo, sizeof(server_getaddrinfo)) < 0)
+	if (bind(server_socket,
+		(struct sockaddr *)&server_getaddrinfo,
+		sizeof(server_getaddrinfo)) < 0)
 	{
-		errno = EINVAL;
-		printf("Couldn't bind to server socket %d\n", server_getaddrinfo.sin_addr.s_addr);
-		if (errno != EINVAL)
-			printf("error: %s\n", strerror(errno));
+		perror("bind error: %s", strerror(errno));
 	}
-
 	if (listen(server_socket, BACKLOG) < 0)
 	{
-		errno = EINVAL;
-		printf("Couldn't listen to server socket %d\n", server_socket);
-		if (errno != EINVAL)
-			printf("Error %s\n", strerror(errno));
+		perror("listen error: %s", strerror(errno));
 		return (-1);
 	}
-
 	for (;;)
 	{
 		client_length = sizeof(server_getaddrinfo);
-
-		if ((client_socket = accept(server_socket, (struct sockaddr *)&server_getaddrinfo, &client_length)) < 0)
+		client_socket = accept(server_socket,
+		(struct sockaddr *)&server_getaddrinfo,
+		&client_length);
+		if (client_socket < 0)
 		{
-			perror("accept failed");
+			perror("accept error: %s", strerror(errno));
 			return (-1);
-
 		}
-
 		printf("Client IP address: %s\n", inet_ntoa(client_getaddrinfo.sin_addr));
-
-		
 	}
-
-
 }
